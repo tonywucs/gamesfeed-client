@@ -1,24 +1,54 @@
-import axios from 'axios'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const SERVER_URL = import.meta.env.VITE_SERVER_URL
-// const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwibG9naW5UaW1lIjoxNjkzMzQ3MzMxODQ5LCJpYXQiOjE2OTMzNDczMzEsImV4cCI6MTY5MzM0ODUzMX0.df6E1BqdT9sbeHw3R9WSB2EtJkaEqM5XzCX18F7_YZs"
-// axios.get(`${SERVER_URL}/user/prefs`, {
-//     headers: {
-//         Authorization: `Bearer ${token}`
-//     }
-// })
-// .then(res => {
-//     console.log(res.data)
-// })
-
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+const ENDPOINT = SERVER_URL + '/news';
 
 const Homepage = () => {
 
-    return (
-        <div>
-            <h1>Homepage</h1>
-        </div>
-    );
+  const token = sessionStorage.authToken;
+
+  const [newsArticles, setNewsArticles] = useState<any[]>([]);
+  const [numOfArticles, setNumOfArticles] = useState(10);
+
+  useEffect(() => {
+    (async () => {
+      if (token) {
+        const { data } = await axios.get(`${ENDPOINT}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        })
+        setNewsArticles(data.articles)
+      }
+    })()
+  }, [])
+
+  return (
+    <>
+      {
+        token ? newsArticles.map((newsArticle: any) => {
+          return (
+            <>
+              <h1 className="text-5xl">{newsArticle.preference}</h1>,
+              {
+                newsArticle.articles.map((article: any) => {
+                  return (
+                    <>
+                      <h2>{article.title}</h2>
+                      <img className="w-1/2 h-1/2 rounded-xl" src={article.url_to_image}></img>
+                    </>
+                  )
+                })
+              }
+            </>
+          )
+        })
+          :
+          <h1>Nothing loaded yet</h1>
+      }
+    </>
+  );
 };
 
 export default Homepage;

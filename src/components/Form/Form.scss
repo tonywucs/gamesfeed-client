@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+// @use '../../styles/globals' as *;
+
+@layer components {
+    .form {
+        @apply bg-red-500;
+
+        &__field {
+            @apply h-10 mt-1 pl-2 border-2 border-slate-200 rounded-xl focus:ring-0 focus:outline-none;
+        }
+    }
+}
