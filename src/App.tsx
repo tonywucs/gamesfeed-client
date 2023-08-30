@@ -1,14 +1,32 @@
 import { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+
+import Homepage from './pages/Homepage'
+import Redirect from './pages/Redirect'
+import UserDashboard from './pages/UserDashboard'
+import Header from './components/Header/Header'
+import SideNav from './components/SideNav/SideNav'
+
 import './App.scss'
-import NewsFeed from './pages/NewsFeed'
 
 function App() {
-  const [galleryView, setGalleryView] = useState(false)
+
+  const [toggleSideNav, setToggleSideNav] = useState(false);
+
+  const handleToggleSideNav = () => {
+    setToggleSideNav(!toggleSideNav);
+  }
 
   return (
-    <>
-    <NewsFeed />
-    </>
+    <BrowserRouter>
+      <Header handleToggleSideNav={handleToggleSideNav} />
+      {/* <SideNav toggle={toggleSideNav} /> */}
+      <Routes>
+        <Route path='/' element={<Homepage />} />
+        <Route path='/news' element={<UserDashboard />} />
+        <Route path='*' element={<Redirect />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
