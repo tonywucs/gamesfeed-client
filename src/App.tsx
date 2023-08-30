@@ -6,6 +6,7 @@ import Redirect from './pages/Redirect'
 import UserDashboard from './pages/UserDashboard'
 import Header from './components/Header/Header'
 import SideNav from './components/SideNav/SideNav'
+import Form from './components/Form/Form'
 
 import './App.scss'
 
@@ -20,10 +21,11 @@ function App() {
   return (
     <BrowserRouter>
       <Header handleToggleSideNav={handleToggleSideNav} />
-      {/* <SideNav toggle={toggleSideNav} /> */}
+      <SideNav toggle={toggleSideNav} />
       <Routes>
         <Route path='/' element={<Homepage />} />
         <Route path='/news' element={<UserDashboard />} />
+        <Route path='/signup' element={<Form />} />
         <Route path='*' element={<Redirect />} />
       </Routes>
     </BrowserRouter>
