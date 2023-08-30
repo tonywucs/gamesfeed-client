@@ -1,14 +1,21 @@
 import { useState } from 'react'
 
 interface navOptions {
-    toggle: boolean
+    toggleSideNav: boolean,
+    handleToggleSideNav: () => void
 }
 
-const SideNav = ({ toggle }: navOptions) => {
+const SideNav = ({ toggleSideNav, handleToggleSideNav }: navOptions) => {
     return (
-        <div>
-            { toggle ? <h1 className="absolute">SIDE NAV</h1> : "" }
-        </div>
+        <>
+            {toggleSideNav ?
+                <div className="absolute z-20 w-24 h-full bg-slate-700">
+                    <h1 className="text-5xl">SIDE NAV</h1>
+                    <div className="bg-white w-12 h-12 flex justify-center items-center" onClick={handleToggleSideNav}>X</div>
+                </div> : ""
+            }
+        </>
+
     );
 };
 

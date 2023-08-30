@@ -10,13 +10,12 @@
 body {
     margin: 0;
     padding: 0;
-    height: 100vh;
 }
 
 #root {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     align-items:stretch;
     align-content:stretch;
 }

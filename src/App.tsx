@@ -21,7 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <Header handleToggleSideNav={handleToggleSideNav} />
-      <SideNav toggle={toggleSideNav} />
+      <SideNav toggleSideNav={toggleSideNav} handleToggleSideNav={handleToggleSideNav} />
       <Routes>
         <Route path='/' element={<Homepage />} />
         {/* <Route path='/news' element={<UserDashboard />} /> */}

@@ -6,7 +6,7 @@ interface headerOptions {
 
 const Header = ({ handleToggleSideNav }: headerOptions) => {
     return (
-        <header className="flex h-24 bg-red-100 items-center">
+        <header className="sticky top-0 z-10 flex shrink-0 w-full h-24 bg-red-100 items-center">
             <div
                 className="absolute w-12 h-12 border-2 border-black rounded-lg ml-4"
                 onClick={handleToggleSideNav}

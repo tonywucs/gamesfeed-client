@@ -1,10 +1,11 @@
-import React from 'react';
+import NewsArticleList from "../NewsArticleList/NewsArticleList";
 
 const NewsArticleGallery = () => {
+    
     return (
-        <div>
-            
-        </div>
+        <>
+          <NewsArticleList />
+        </>
     );
 };
 
