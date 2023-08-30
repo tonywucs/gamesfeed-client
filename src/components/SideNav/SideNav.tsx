@@ -7,7 +7,7 @@ interface navOptions {
 const SideNav = ({ toggle }: navOptions) => {
     return (
         <div>
-            { toggle ? <h1>SIDE NAV</h1> : "" }
+            { toggle ? <h1 className="absolute">SIDE NAV</h1> : "" }
         </div>
     );
 };

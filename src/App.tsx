@@ -24,8 +24,9 @@ function App() {
       <SideNav toggle={toggleSideNav} />
       <Routes>
         <Route path='/' element={<Homepage />} />
-        <Route path='/news' element={<UserDashboard />} />
+        {/* <Route path='/news' element={<UserDashboard />} /> */}
         <Route path='/signup' element={<Form />} />
+        <Route path='/login' element={<Form />} />
         <Route path='*' element={<Redirect />} />
       </Routes>
     </BrowserRouter>
