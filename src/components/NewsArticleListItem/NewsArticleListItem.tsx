@@ -16,10 +16,11 @@ interface articleObj {
 
 interface article {
     article: articleObj,
-    preference: string
+    preference: string,
+    index: number
 };
 
-const NewsArticleListItem = ({ article, preference }: article) => {
+const NewsArticleListItem = ({ article, preference, index }: article) => {
 
     const [click, setClick] = useState(false);
     const [recClick, setRecClick] = useState(false);
@@ -43,7 +44,12 @@ const NewsArticleListItem = ({ article, preference }: article) => {
                 style={{ backgroundImage: `url('${article.url_to_image}')` }}
             >
                 <div className="c-newsArticle__header">
-                    <h4 className="c-newsArticle__textPill bg-green-600">{preference}</h4>
+                    <h4 className={`c-newsArticle__textPill ${
+                                index % 3 === 0 ? "bg-red-500" :
+                                index % 3 === 1 ? "bg-green-500" :
+                                index % 3 === 2 ? "bg-blue-500" :
+                                ""
+                            }`}>{preference}</h4>
                     <div
                         className={`c-newsArticle__recommend ${recClick ? "bg-green-600" : ""}`}
                         onClick={handleRecClick}
@@ -54,7 +60,7 @@ const NewsArticleListItem = ({ article, preference }: article) => {
                     {
                         !click ?
                             <div className="c-newsArticle__sourceRecent">
-                                <p className="c-newsArticle__textPill bg-red-600">{article.source}</p>
+                                <p className="c-newsArticle__textPill bg-slate-600">{article.source}</p>
                                 <p className="c-newsArticle__recent">{daysAgo} days ago</p>
                             </div>
                             : ""

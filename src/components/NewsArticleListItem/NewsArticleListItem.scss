@@ -5,7 +5,7 @@
 @layer components {
     .c-newsArticle {
         &__card {
-            @apply flex flex-col relative h-[75vw] max-h-[30rem] mx-4 border-2 border-black rounded-xl bg-center bg-cover;
+            @apply flex flex-col relative h-[75vw] max-h-[30rem] border-2 border-black rounded-xl bg-center bg-cover;
         }
 
         &__header {
