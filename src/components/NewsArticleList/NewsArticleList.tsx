@@ -42,10 +42,19 @@ const NewsArticleList = () => {
     }
   }
 
+  if (Object.keys(newsArticles).length === 0) {
+    return (<h1>Loading</h1>)
+  }
+
+  const totalResults = newsArticles.map((article) => {
+    return article.results
+  })
+
+  // Could possibly move some code here out of return statement for readability
   return (
     <>
       <div className="flex flex-col gap-y-2">
-        <FilterNav handleFilterPref={handleFilterPref} />
+        <FilterNav handleFilterPref={handleFilterPref} totalResults={totalResults} />
         {
           token ?
             newsArticles

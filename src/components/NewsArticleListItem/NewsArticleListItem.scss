@@ -5,14 +5,15 @@
 @layer components {
     .c-newsArticle {
         &__card {
-            @apply flex flex-col relative h-[75vw] max-h-[30rem] border-2 border-black rounded-xl bg-center bg-cover;
+            @apply flex flex-col relative h-[75vw] max-h-[30rem];
+            @apply border-2 border-black rounded-xl bg-center bg-cover;
 
             &--headline {
 
             }
         }
 
-        &__header {
+        &__cardHeader {
             @apply flex justify-between items-center h-8 m-2;
 
             &--headline {
@@ -21,8 +22,8 @@
         }
 
         &__textPill {
-            @apply z-10 w-fit h-fit px-2 py-0.5 rounded-lg;
-            @apply font-bold text-white text-xs;
+            @apply z-10 w-fit h-fit px-2 py-0.5;
+            @apply rounded-lg font-bold text-white text-xs line-clamp-1;
             @apply cursor-pointer hover:underline;
 
             &--headline {
@@ -31,7 +32,8 @@
         }
 
         &__recommend {
-            @apply z-10 w-8 h-8 border-2 border-green-500 rounded-lg;
+            @apply z-10 w-8 h-8;
+            @apply border-2 border-green-500 rounded-lg;
             @apply cursor-pointer;
 
             &--headline {
@@ -66,16 +68,21 @@
         }
 
         &__info {
-            @apply flex flex-col justify-between h-[4.5rem] bg-black/30 rounded-xl mt-1 px-4 py-2;
-            @apply text-white;
+            @apply flex flex-col justify-between h-[4.5rem] mt-1 px-4 py-2;
+            @apply bg-black/40 rounded-xl text-white overflow-hidden;
             @apply cursor-pointer transition-all;
 
             &--headline {
                 
             }
         }
+
+        &__infoHeader {
+            @apply flex flex-col gap-y-2;
+        }
         
         &__title {
+            @apply h-14;
             @apply text-lg font-bold line-clamp-2;
 
             &--headline {
@@ -84,7 +91,7 @@
         }
 
         &__reference {
-            @apply flex items-center gap-x-2;
+            @apply flex justify-between items-center gap-x-2;
 
             &--headline {
                 
@@ -92,8 +99,8 @@
         }
         
         &__description {
-            @apply h-12 mt-2;
-            @apply text-base line-clamp-2;
+            @apply h-[3.75rem];
+            @apply text-sm line-clamp-3;
 
             &--headline {
                 
@@ -101,7 +108,8 @@
         }
         
         &__readMore {
-            @apply flex justify-center items-center self-end w-fit h-6 px-2 my-2 rounded-xl bg-white/75;
+            @apply flex justify-center items-center gap-x-2 w-fit h-6 px-2 my-2;
+            @apply rounded-xl bg-white/75;
             @apply text-black text-xs;
 
             &--headline {

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/user/prefs';
 
-const FilterNav = ({ handleFilterPref }: any) => {
+const FilterNav = ({ handleFilterPref, totalResults }: any) => {
 
     // Information/Endpoints to add
     // getAllPrefs
@@ -39,12 +39,12 @@ const FilterNav = ({ handleFilterPref }: any) => {
                                 i % 3 === 1 ? "bg-green-500" :
                                 i % 3 === 2 ? "bg-blue-500" :
                                 ""
-                            } rounded-lg px-2 py-0.5 text-white cursor-pointer italic`}
+                            } rounded-lg px-2 py-0.5 text-white cursor-pointer italic flex items-center`}
                             onClick={() => {
-                                handleFilterPref(pref)
+                                handleFilterPref(pref.name)
                             }}
-                            key={`${pref}${i}`}
-                        >{pref}</p>
+                            key={`${pref.name}${i}`}
+                        >{pref.name}<span className="flex justify-center items-center not-italic ml-2 text-xs w-6 h-6 p-2 rounded-full bg-slate-500">{totalResults[i]}</span></p>
                     )
                 })
             }
