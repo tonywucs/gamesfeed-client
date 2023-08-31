@@ -43,41 +43,43 @@ const NewsArticleList = () => {
   }
 
   return (
-    <div className="flex flex-col gap-y-2">
-      <FilterNav handleFilterPref={handleFilterPref} />
-      {
-        token ?
-          newsArticles
-            .filter((newsArticle) => {
-              if (Object.keys(filterPref).length === 0) {
-                return true
-              } else {
-                return filterPref[`${newsArticle.preference}`]
-              }
-            })
-            .map((newsArticle: any, i: number) => {
-              return (
-                <ul key={`list${newsArticle.preference}${i}`} className="flex flex-col gap-y-2">
-                  {/* <h2 key={`title${newsArticle.preference}${i}`} className="text-2xl">{newsArticle.preference}</h2> */}
-                  {
-                    newsArticle.articles.map((article: any, j: number) => {
-                      return (
-                        <NewsArticleListItem
-                          key={`${article.title}${j}`}
-                          index={i}
-                          article={article}
-                          preference={newsArticle.preference}
-                        />
-                      )
-                    })
-                  }
-                </ul>
-              )
-            })
-          :
-          ""
-      }
-    </div>
+    <>
+      <div className="flex flex-col gap-y-2">
+        <FilterNav handleFilterPref={handleFilterPref} />
+        {
+          token ?
+            newsArticles
+              .filter((newsArticle) => {
+                if (Object.keys(filterPref).length === 0) {
+                  return true
+                } else {
+                  return filterPref[`${newsArticle.preference}`]
+                }
+              })
+              .map((newsArticle: any, i: number) => {
+                return (
+                  <ul key={`list${newsArticle.preference}${i}`} className="flex flex-col gap-y-2">
+                    {/* <h2 key={`title${newsArticle.preference}${i}`} className="text-2xl">{newsArticle.preference}</h2> */}
+                    {
+                      newsArticle.articles.map((article: any, j: number) => {
+                        return (
+                          <NewsArticleListItem
+                            key={`${article.title}${j}`}
+                            index={i}
+                            article={article}
+                            preference={newsArticle.preference}
+                          />
+                        )
+                      })
+                    }
+                  </ul>
+                )
+              })
+            :
+            ""
+        }
+      </div>
+    </>
   );
 };
 

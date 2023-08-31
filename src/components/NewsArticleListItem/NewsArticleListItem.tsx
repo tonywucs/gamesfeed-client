@@ -38,12 +38,12 @@ const NewsArticleListItem = ({ article, preference, index }: article) => {
     }
 
     return (
-        <li className="c-newsArticle">
+        <li className={`c-newsArticle`}>
             <div
-                className="c-newsArticle__card"
+                className={`c-newsArticle__card`}
                 style={{ backgroundImage: `url('${article.url_to_image}')` }}
             >
-                <div className="c-newsArticle__header">
+                <div className={`c-newsArticle__header`}>
                     <h4 className={`c-newsArticle__textPill ${
                                 index % 3 === 0 ? "bg-red-500" :
                                 index % 3 === 1 ? "bg-green-500" :
@@ -56,12 +56,12 @@ const NewsArticleListItem = ({ article, preference, index }: article) => {
                     ></div>
                 </div>
 
-                <div className="c-newsArticle__content">
+                <div className={`c-newsArticle__content`}>
                     {
                         !click ?
-                            <div className="c-newsArticle__sourceRecent">
-                                <p className="c-newsArticle__textPill bg-slate-600">{article.source}</p>
-                                <p className="c-newsArticle__recent">{daysAgo} days ago</p>
+                            <div className={`c-newsArticle__sourceRecent`}>
+                                <p className={`c-newsArticle__textPill bg-slate-600`}>{article.source}</p>
+                                <p className={`c-newsArticle__recent`}>{daysAgo} days ago</p>
                             </div>
                             : ""
                     }
@@ -70,18 +70,18 @@ const NewsArticleListItem = ({ article, preference, index }: article) => {
                         className={`c-newsArticle__info ${click ? "h-[11.5rem] bg-black/50" : ""}`}
                         onClick={handleClick}
                     >
-                        <h3 className="c-newsArticle__title">{article.title}</h3>
+                        <h3 className={`c-newsArticle__title`}>{article.title}</h3>
                         {
                             click ?
                                 <>
-                                    <div className="c-newsArticle__reference">
-                                        <p className="c-newsArticle__textPill p-0 italic">{article.source}</p>
+                                    <div className={`c-newsArticle__reference`}>
+                                        <p className={`c-newsArticle__textPill p-0 italic`}>{article.source}</p>
                                         <span>-</span>
-                                        <p className="c-newsArticle__textPill p-0 italic">{article.author}</p>
+                                        <p className={`c-newsArticle__textPill p-0 italic`}>{article.author}</p>
                                     </div>
-                                    <h3 className="c-newsArticle__description">{article.description}</h3>
+                                    <h3 className={`c-newsArticle__description`}>{article.description}</h3>
                                     <Link
-                                        className="c-newsArticle__readMore"
+                                        className={`c-newsArticle__readMore`}
                                         to={article.url}
                                         target="_blank"
                                     >Read More</Link>
@@ -92,7 +92,7 @@ const NewsArticleListItem = ({ article, preference, index }: article) => {
                 </div>
 
                 <Link
-                    className="c-newsArticle__overlay"
+                    className={`c-newsArticle__overlay`}
                     to={article.url}
                     target="_blank"
                 ></Link>

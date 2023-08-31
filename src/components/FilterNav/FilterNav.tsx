@@ -27,7 +27,7 @@ const FilterNav = ({ handleFilterPref }: any) => {
     useEffect(() => {
         if (userPref.length === 0) { getUserPref() }
     }, [])
-
+    
     return (
         <div className="flex gap-x-2">
             {
