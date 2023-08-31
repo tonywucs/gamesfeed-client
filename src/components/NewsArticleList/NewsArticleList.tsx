@@ -67,7 +67,9 @@ const NewsArticleList = () => {
               })
               .map((newsArticle: any, i: number) => {
                 return (
-                  <ul key={`list${newsArticle.preference}${i}`} className="flex flex-col gap-y-2">
+                  // List View "grid grid-cols-1 gap-4"
+                  // Grid View "grid grid-cols-2 gap-4"
+                  <ul key={`list${newsArticle.preference}${i}`} className="grid grid-cols-2 gap-4">
                     {/* <h2 key={`title${newsArticle.preference}${i}`} className="text-2xl">{newsArticle.preference}</h2> */}
                     {
                       newsArticle.articles.map((article: any, j: number) => {
@@ -75,6 +77,7 @@ const NewsArticleList = () => {
                           <NewsArticleListItem
                             key={`${article.title}${j}`}
                             index={i}
+                            articleIndex={j}
                             article={article}
                             preference={newsArticle.preference}
                           />

@@ -4,12 +4,19 @@
 
 @layer components {
     .c-newsArticle {
+        // @apply grid grid-cols-2 col-span-2 grid-flow-row;
+
+        &:first-child {
+            @apply grid grid-cols-2 col-span-2;
+        }
+
         &__card {
-            @apply flex flex-col relative h-[75vw] max-h-[30rem];
+            @apply col-span-2 relative h-[75vw] max-h-[30rem];
             @apply border-2 border-black rounded-xl bg-center bg-cover;
 
-            &--headline {
-
+            &--headlineChild {
+                @apply col-span-1 relative h-[37.5vw] max-h-[15rem] w-full;
+                @apply border-2 border-black rounded-xl bg-center bg-cover;
             }
         }
 

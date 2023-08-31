@@ -22,15 +22,21 @@ interface articleObj {
 interface article {
     article: articleObj,
     preference: string,
-    index: number
+    index: number,
+    articleIndex: number
 };
 
-const NewsArticleListItem = ({ article, preference, index }: article) => {
+const NewsArticleListItem = ({ article, preference, index, articleIndex }: article) => {
 
     const token = sessionStorage.authToken;
     const [click, setClick] = useState(false);
     const [recClick, setRecClick] = useState(false);
     const [userRecommended, setUserRecommended] = useState(undefined);
+    const [viewMode, setViewMode] = useState({
+        list: false,
+        grid: false,
+        headline: true
+    });
 
     const published = Date.parse(article.published_at);
     const seen = Date.now()
@@ -79,7 +85,7 @@ const NewsArticleListItem = ({ article, preference, index }: article) => {
     return (
         <li className={`c-newsArticle`}>
             <div
-                className={`c-newsArticle__card`}
+                className={(viewMode.list ? false : viewMode.grid ? true : viewMode.headline ? (articleIndex > 0) ? true : false : false) ? `c-newsArticle__card--headlineChild` : `c-newsArticle__card`}
                 style={{ backgroundImage: `url('${article.url_to_image}')` }}
             >
                 <div className={`c-newsArticle__cardHeader`}>
