@@ -29,7 +29,7 @@ const NewsArticleList = () => {
       {
         token ? newsArticles.map((newsArticle: any, i: number) => {
           return (
-            <ul>
+            <ul className="flex flex-col gap-y-2">
               <h2 key={`${newsArticle.preference}${i}`} className="text-5xl">{newsArticle.preference}</h2>
               {
                 newsArticle.articles.map((article: any, j: number) => {

@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+
+import './NewsArticleListItem.scss';
 
 interface articleObj {
     id: number,
@@ -17,43 +20,77 @@ interface article {
 };
 
 const NewsArticleListItem = ({ article, preference }: article) => {
-    console.log(JSON.stringify(article, null, 2));
+
+    const [click, setClick] = useState(false);
+    const [recClick, setRecClick] = useState(false);
 
     const published = Date.parse(article.published_at);
     const seen = Date.now()
     const daysAgo = Math.floor((seen - published) / 86400000);
 
+    const handleClick = () => {
+        setClick(!click)
+    }
+
+    const handleRecClick = () => {
+        setRecClick(!recClick);
+    }
+
     return (
-        <li className="my-2">
+        <li className="c-newsArticle">
             <div
-                className="relative flex flex-col h-[75vw] max-h-[30rem] border-2 border-black rounded-xl mx-4 bg-center bg-cover"
+                className="c-newsArticle__card"
                 style={{ backgroundImage: `url('${article.url_to_image}')` }}
             >
-                <div className="flex justify-between m-2 h-8 z-10">
-                    <h4 className="flex justify-center items-center font-bold w-fit px-2 py-1 bg-red-600 rounded-xl">{preference}</h4>
-                    <div className="w-8 h-8 border-2 border-green-500 rounded-xl"></div>
+                <div className="c-newsArticle__header">
+                    <h4 className="c-newsArticle__textPill bg-green-600">{preference}</h4>
+                    <div
+                        className={`c-newsArticle__recommend ${recClick ? "bg-green-600" : ""}`}
+                        onClick={handleRecClick}
+                    ></div>
                 </div>
 
-                <div className="absolute bottom-6 z-10 m-2">
-                    <div className="flex items-center justify-between h-8">
-                        <div className="flex items-center gap-x-1">
-                            <p className="flex justify-center items-center font-bold w-fit px-2 py-1 bg-yellow-600 rounded-xl">{article.source}</p>
-                            <p className="hidden justify-center items-center font-bold w-fit px-2 py-1 bg-blue-600 rounded-xl md:flex">{article.author}</p>
-                        </div>
-                        <p className="flex justify-center items-center font-bold w-fit px-2 py-1 bg-gray-600 rounded-xl">{daysAgo} days ago...</p>
+                <div className="c-newsArticle__content">
+                    {
+                        !click ?
+                            <div className="c-newsArticle__sourceRecent">
+                                <p className="c-newsArticle__textPill bg-red-600">{article.source}</p>
+                                <p className="c-newsArticle__recent">{daysAgo} days ago</p>
+                            </div>
+                            : ""
+                    }
+
+                    <div
+                        className={`c-newsArticle__info ${click ? "h-[11.5rem] bg-black/50" : ""}`}
+                        onClick={handleClick}
+                    >
+                        <h3 className="c-newsArticle__title">{article.title}</h3>
+                        {
+                            click ?
+                                <>
+                                    <div className="c-newsArticle__reference">
+                                        <p className="c-newsArticle__textPill p-0 italic">{article.source}</p>
+                                        <span>-</span>
+                                        <p className="c-newsArticle__textPill p-0 italic">{article.author}</p>
+                                    </div>
+                                    <h3 className="c-newsArticle__description">{article.description}</h3>
+                                    <Link
+                                        className="c-newsArticle__readMore"
+                                        to={article.url}
+                                        target="_blank"
+                                    >Read More</Link>
+                                </>
+                                : ""
+                        }
                     </div>
-
-                    <h3 className="text-white text-2xl font-bold mt-2 line-clamp-2">{article.title}</h3>
                 </div>
 
-                <div className="absolute top-0 w-full h-full bg-black opacity-25"></div>
+                <Link
+                    className="c-newsArticle__overlay"
+                    to={article.url}
+                    target="_blank"
+                ></Link>
             </div>
-
-            {/* <p>{article.description}</p> */}
-
-            {/* <Link to={article.url} target="_blank">
-                <img src={article.url_to_image} alt={article.title} />
-            </Link> */}
         </li>
     );
 };
