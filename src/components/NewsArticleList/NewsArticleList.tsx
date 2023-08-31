@@ -69,6 +69,7 @@ const NewsArticleList = () => {
                 return (
                   // List View "grid grid-cols-1 gap-4"
                   // Grid View "grid grid-cols-2 gap-4"
+                  // Headline View "grid grid-cols-2 gap-4"
                   <ul key={`list${newsArticle.preference}${i}`} className="grid grid-cols-2 gap-4">
                     {/* <h2 key={`title${newsArticle.preference}${i}`} className="text-2xl">{newsArticle.preference}</h2> */}
                     {
