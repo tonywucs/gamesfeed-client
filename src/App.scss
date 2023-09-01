@@ -1,1 +1,87 @@
 @use './styles/globals' as *;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer componenets {
+    .listView {
+        @apply mt-24;
+        @apply grid grid-cols-1 mx-4 gap-2;
+        @apply md:mx-8;
+        @apply xl:mx-auto xl:max-w-5xl xl:w-full;
+
+        &__cell {
+            @apply h-60 bg-red-500 rounded-xl overflow-hidden;
+            @apply md:h-52;
+            @apply xl:h-60;
+
+            input:checked+&>.listView__cellContent {
+                transform: translateY(-100%);
+            }
+        }
+
+        &__face {
+            @apply w-full h-full;
+        }
+
+        &__cellContent {
+            @apply w-full h-full bg-black/60;
+            transition: transform 100ms ease-out;
+        }
+    }
+
+    .gridView {
+        @apply grid grid-cols-2 mx-4 gap-2;
+        @apply md:grid-cols-3 md:mx-8;
+        @apply xl:w-full xl:mx-auto xl:max-w-5xl;
+
+        &__cell {
+            @apply h-[45vw] max-h-60 bg-red-500 rounded-xl overflow-hidden;
+            @apply md:h-[31.78vw] md:max-h-72;
+
+            input:checked+&>.gridView__cellContent {
+                transform: translateY(-100%);
+            }
+
+            
+        }
+
+        &__face {
+            @apply w-full h-full;
+        }
+
+        &__cellContent {
+            @apply w-full h-full bg-black/60;
+            transition: transform 100ms ease-out;
+        }
+    }
+
+    .headlineView {
+        @apply grid grid-cols-2 mx-4 gap-2;
+        @apply md:grid-cols-3 md:mx-8;
+        @apply xl:w-full xl:mx-auto xl:max-w-5xl;
+
+        &__feature {
+            @extend .headlineView__cell;
+            @apply col-span-2 md:col-span-3;
+        }
+
+        &__cell {
+            @apply h-[45vw] max-h-60 bg-red-500 rounded-xl overflow-hidden;
+            @apply md:h-[31.78vw] md:max-h-72;
+
+            input:checked+&>.headlineView__cellContent {
+                transform: translateY(-100%);
+            }
+        }
+
+        &__face {
+            @apply w-full h-full;
+        }
+
+        &__cellContent {
+            @apply w-full h-full bg-black/60;
+            transition: transform 100ms ease-out;
+        }
+    }
+}
