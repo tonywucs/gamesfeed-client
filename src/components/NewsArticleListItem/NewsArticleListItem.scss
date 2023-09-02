@@ -1,111 +1,93 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@use '../../styles/globals' as *;
 
 @layer components {
     .c-newsArticle {
-        // @apply grid grid-cols-2 col-span-2 grid-flow-row;
-
-        &:first-child {
-            @apply grid grid-cols-2 col-span-2;
+        @apply h-[75vw] max-h-[15rem] xl:max-h-[20rem] bg-cover bg-center rounded-xl overflow-hidden relative;
+        
+        &__overlay {
+            @apply absolute top-0 w-full h-full;
         }
 
         &__card {
-            @apply col-span-2 relative h-[75vw] max-h-[30rem];
-            @apply border-2 border-black rounded-xl bg-center bg-cover;
-
-            &--headlineChild {
-                @apply col-span-1 relative h-[37.5vw] max-h-[15rem] w-full;
-                @apply border-2 border-black rounded-xl bg-center bg-cover;
-            }
+            @apply flex flex-col justify-between h-full;
         }
 
         &__cardHeader {
-            @apply flex justify-between items-center h-8 m-2;
-
-            &--headline {}
+            @apply flex justify-between items-center h-8 md:h-12 m-4;
         }
 
         &__textPill {
-            @apply z-10 w-fit h-fit px-2 py-0.5;
-            @apply rounded-lg font-bold text-white text-xs line-clamp-1;
-            @apply cursor-pointer hover: underline;
-
-            &--headline {}
+            @extend .pill;
         }
 
         &__recommend {
-            @apply z-10 w-8 h-8;
+            @apply z-10 w-8 h-8 md:w-12 md:h-12;
             @apply border-2 border-green-500 rounded-lg;
             @apply cursor-pointer;
-
-            &--headline {}
-        }
-
-        &__content {
-            @apply absolute bottom-0 z-10 m-2;
-
-            &--headline {}
         }
 
         &__sourceRecent {
-            @apply flex items-center justify-between h-8;
+            @apply flex items-center justify-between h-8 mx-2;
+            @apply -translate-y-[235%];
 
-            &--headline {}
-        }
-
-        &__recent {
-            @apply px-2 py-1;
-            @apply text-sm text-slate-100;
-            @apply hover: underline;
-
-            &--headline {}
+            &--grid {
+                @extend .c-newsArticle__sourceRecent;
+                @apply -translate-y-[150%] hidden md:flex;
+            }
         }
 
         &__info {
-            @apply flex flex-col justify-between h-[4.5rem] mt-1 px-4 py-2;
-            @apply bg-black/40 rounded-xl text-white overflow-hidden;
-            @apply cursor-pointer transition-all;
-
-            &--headline {}
-        }
-
-        &__infoHeader {
             @apply flex flex-col gap-y-2;
         }
 
         &__title {
-            @apply h-14;
-            @apply text-lg font-bold line-clamp-2;
+            @extend .miniheader;
+            @apply h-14 font-bold line-clamp-2;
 
-            &--headline {}
+            &--grid {
+                @extend .c-newsArticle__title;
+                @apply text-xs font-semibold h-8;
+            }
         }
 
         &__reference {
             @apply flex justify-between items-center gap-x-2;
-
-            &--headline {}
         }
 
         &__description {
+            @extend .body-md;
             @apply h-[3.75rem];
-            @apply text-sm line-clamp-3;
+            @apply line-clamp-3;
 
-            &--headline {}
+            &--grid {
+                @extend .c-newsArticle__description;
+                @apply md:line-clamp-2 md:h-12;
+            }
         }
 
         &__readMore {
-            @apply flex justify-center items-center gap-x-2 w -fit h-6 px-2 my-2;
+            @extend .body-md;
+            @apply flex justify-center items-center gap-x-2 w-fit h-6 px-2 py-4 my-2;
             @apply rounded-xl bg-white/75;
-            @apply text-black text-xs;
-
-            &--headline {}
+            @apply text-black ;
         }
 
-        &__overlay {
-            @apply absolute top-0 z-0 w-full h-full rounded-xl;
+        &__body {
+            @apply w-full bg-black/60 transition-all px-4 pb-4 pt-2 text-white;
+            @apply h-[12rem] absolute -bottom-[118px] flex flex-col md:justify-between;
+            
+            &--clicked {
+                @apply -translate-y-[60%];
+            }
 
-            &--headline {}
+            &--grid {
+                @extend .c-newsArticle__body;
+                @apply h-[12.5rem] absolute -bottom-[152px] flex flex-col md:justify-between;
+                
+                &--clicked {
+                    @apply -translate-y-[23%] md:-translate-y-[72%];
+                }
+            }
         }
     }
 }

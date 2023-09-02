@@ -23,20 +23,16 @@ interface article {
     article: articleObj,
     preference: string,
     index: number,
-    articleIndex: number
+    articleIndex: number,
+    viewMode: string
 };
 
-const NewsArticleListItem = ({ article, preference, index, articleIndex }: article) => {
+const NewsArticleListItem = ({ article, preference, index, articleIndex, viewMode }: article) => {
 
     const token = sessionStorage.authToken;
     const [click, setClick] = useState(false);
     const [recClick, setRecClick] = useState(false);
-    const [userRecommended, setUserRecommended] = useState(undefined);
-    const [viewMode, setViewMode] = useState({
-        list: false,
-        grid: false,
-        headline: true
-    });
+    const [userRecommended, setUserRecommended] = useState<any>([]);
 
     const published = Date.parse(article.published_at);
     const seen = Date.now()
@@ -45,22 +41,22 @@ const NewsArticleListItem = ({ article, preference, index, articleIndex }: artic
     const getRec = async () => {
         const { data } = await axios.get(`${ENDPOINT}`, {
             headers: {
-              Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`,
             }
-          });
+        });
 
-        setUserRecommended(data);
+        setUserRecommended(data.articles);
     }
 
     const updateRec = async (id: number) => {
         await axios
             .post(`${ENDPOINT}`, { newsarticle_id: id }, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          });
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
 
-          getRec();
+        getRec();
     }
 
     const handleClick = () => {
@@ -73,84 +69,54 @@ const NewsArticleListItem = ({ article, preference, index, articleIndex }: artic
     }
 
     useEffect(() => {
-        if (!userRecommended) { getRec() }
+        if (userRecommended.length === 0) { getRec() }
     }, [])
 
-    if (!userRecommended) {
-        // Add rotating gamepad buttons are loading animation or gradient background
-        // During refactor, look for ways to speed up load times, this component may be doing too much at once
-        return (<div className="c-newsArticle__card flex justify-center items-center">Loading...</div>)
+    if (userRecommended.length === 0) {
+        // Loading display
+        return (<div className="c-newsArticle border-2 flex justify-center items-center">Loading...</div>)
     }
 
     return (
-        <li className={`c-newsArticle`}>
-            <div
-                className={(viewMode.list ? false : viewMode.grid ? true : viewMode.headline ? (articleIndex > 0) ? true : false : false) ? `c-newsArticle__card--headlineChild` : `c-newsArticle__card`}
-                style={{ backgroundImage: `url('${article.url_to_image}')` }}
-            >
-                <div className={`c-newsArticle__cardHeader`}>
-                    {/* // index % pref_id */}
-                    <h4 className={`c-newsArticle__textPill ${index % 3 === 0 ? "bg-red-500" :
+        <li className={`c-newsArticle ${(viewMode === "headline" && articleIndex === 0) ? "col-span-2 xl:col-span-3" : ""}`} style={{ backgroundImage: `url('${article.url_to_image}')` }}>
+            <div className="c-newsArticle__overlay" onClick={handleClick}></div>
+            <div className="c-newsArticle__card">
+                <div className="c-newsArticle__cardHeader">
+                    {/* % pref_id */}
+                    <h4 className={`c-newsArticle__textPill self-start ${index % 3 === 0 ? "bg-red-500" :
                         index % 3 === 1 ? "bg-green-500" :
                             index % 3 === 2 ? "bg-blue-500" :
                                 ""
                         }`}>{preference}</h4>
                     <div
-                        className={`c-newsArticle__recommend ${ userRecommended.articles.find((art) => article.id === art.id) ? "bg-green-600" : ""}`}
-                        onClick={() => {
-                            handleRecClick(article.id)
-                        }}
+                        className={`c-newsArticle__recommend ${userRecommended.find((art: articleObj) => article.id === art.id) ? "bg-green-600" : ""}`}
+                        onClick={() => { handleRecClick(article.id) }}
                     ></div>
                 </div>
-
-                <div className={`c-newsArticle__content`}>
-                    {
-                        !click ?
-                            <div className={`c-newsArticle__sourceRecent`}>
-                                <p className={`c-newsArticle__textPill bg-slate-600`}>{article.source}</p>
-                                {/* // Instead of days ago I could add read time */}
-                                <p className={`c-newsArticle__recent`}>{daysAgo} days ago</p>
-                            </div>
-                            : ""
-                    }
-
-                    <div
-                        className={`c-newsArticle__info ${click ? "h-[11.5rem] bg-black/60" : ""}`}
-                        onClick={handleClick}
-                    >
-                        <div className="c-newsArticle__infoHeader">
-                            <h3 className={`c-newsArticle__title`}>{article.title}</h3>
-                            {
-                                click ?
-                                    <h3 className={`c-newsArticle__description`}>{article.description}</h3>
-                                    : ""
-                            }
-                        </div>
-                        {
-                            click ?
-                                <div className={`c-newsArticle__reference`}>
-                                    <div className="flex flex-col">
-                                        <p className={`c-newsArticle__textPill p-0 italic`}>{article.source}</p>
-                                        <p className={`c-newsArticle__textPill p-0 italic`}>{article.author}</p>
-                                    </div>
-                                    <Link
-                                        className={`c-newsArticle__readMore`}
-                                        to={article.url}
-                                        target="_blank"
-                                    >
-                                        <img className="w-4 h-4" src={ReadMoreIcon} alt="Read More" />
-                                        <span className="hidden sm:inline-block">Read More</span></Link>
-                                </div>
-                                : ""
-                        }
-                    </div>
+                <div className={`c-newsArticle__sourceRecent ${click ? "hidden" : ""}`}>
+                    <p className={`c-newsArticle__textPill bg-slate-600`}>{article.source}</p>
+                    <p className={`c-newsArticle__textPill bg-slate-600`}>{daysAgo} days ago</p>
                 </div>
-
-                <Link
-                    className={`c-newsArticle__overlay`}
-                    to={article.url}
-                    target="_blank"
-                ></Link>
+            </div>
+            
+            <div className={`c-newsArticle__body ${click ? "c-newsArticle__body--clicked" : ""}`} onClick={handleClick}>
+                <div className="c-newsArticle__info">
+                    <h3 className={`c-newsArticle__title`}>{article.title}</h3>
+                    <h3 className={viewMode != "list" ? `c-newsArticle__description--grid` : "c-newsArticle__description"}>{article.description}</h3>
+                </div>
+                <div className={`c-newsArticle__reference`}>
+                    <div className="flex flex-col">
+                        <p className={`c-newsArticle__textPill p-0 italic`}>{article.source}</p>
+                        <p className={`c-newsArticle__textPill p-0 italic`}>{article.author}</p>
+                    </div>
+                    <Link
+                        className={`c-newsArticle__readMore`}
+                        to={article.url}
+                        target="_blank"
+                    >
+                        <img className="w-4 h-4" src={ReadMoreIcon} alt="Read More" />
+                        <span className="hidden sm:inline-block">Read More</span></Link>
+                </div>
             </div>
         </li>
     );

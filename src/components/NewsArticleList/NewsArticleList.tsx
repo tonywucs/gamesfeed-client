@@ -7,10 +7,18 @@ import FilterNav from '../FilterNav/FilterNav';
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/news';
 
-const NewsArticleList = () => {
+import './NewsArticleList.scss';
+
+
+interface viewMode {
+  viewMode: string,
+  handleViewChange: (mode: string) => void
+}
+
+const NewsArticleList = ({ viewMode, handleViewChange }: viewMode) => {
 
   const token = sessionStorage.authToken;
-  const [newsArticles, setNewsArticles] = useState<any[]>([]);
+  const [newsArticles, setNewsArticles] = useState<any>([]);
   const [filterPref, setFilterPref] = useState({});
 
   const getNewsArticles = async () => {
@@ -53,7 +61,18 @@ const NewsArticleList = () => {
   // Could possibly move some code here out of return statement for readability
   return (
     <>
-      <div className="flex flex-col gap-y-2">
+      <div className={`c-newsArticleGallery`}>
+        <div>
+          <span onClick={() => {
+            handleViewChange("list")
+          }} className="px-4 h-8 rounded-lg bg-black text-white cursor-pointer">List</span>
+          <span onClick={() => {
+            handleViewChange("grid")
+          }} className="px-4 h-8 rounded-lg bg-black text-white cursor-pointer">Grid</span>
+          <span onClick={() => {
+            handleViewChange("headline")
+          }} className="px-4 h-8 rounded-lg bg-black text-white cursor-pointer">Headline</span>
+        </div>
         <FilterNav handleFilterPref={handleFilterPref} totalResults={totalResults} />
         {
           token ?
@@ -66,12 +85,9 @@ const NewsArticleList = () => {
                 }
               })
               .map((newsArticle: any, i: number) => {
+                console.log(viewMode != "list");
                 return (
-                  // List View "grid grid-cols-1 gap-4"
-                  // Grid View "grid grid-cols-2 gap-4"
-                  // Headline View "grid grid-cols-2 gap-4"
-                  <ul key={`list${newsArticle.preference}${i}`} className="grid grid-cols-2 gap-4">
-                    {/* <h2 key={`title${newsArticle.preference}${i}`} className="text-2xl">{newsArticle.preference}</h2> */}
+                  <ul key={`list${newsArticle.preference}${i}`} className={viewMode != "list" ? `c-newsArticleView--grid` : "c-newsArticleView"}>
                     {
                       newsArticle.articles.map((article: any, j: number) => {
                         return (
@@ -81,6 +97,7 @@ const NewsArticleList = () => {
                             articleIndex={j}
                             article={article}
                             preference={newsArticle.preference}
+                            viewMode={viewMode}
                           />
                         )
                       })

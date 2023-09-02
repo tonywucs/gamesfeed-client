@@ -1,12 +1,23 @@
+import { useState } from 'react';
+
 import NewsArticleList from "../NewsArticleList/NewsArticleList";
 
 const NewsArticleGallery = () => {
-    
-    return (
-        <div className="px-4 py-4 bg-slate-600">
-          <NewsArticleList />
-        </div>
-    );
+
+  // const [filters, setFilters] = useState<any[]>(sessionStorage.filters || [])
+  const [viewMode, setViewMode] = useState(sessionStorage.viewMode || "headline")
+
+  function handleViewChange(mode: string) {
+    sessionStorage.viewMode = mode;
+    setViewMode(mode);
+  }
+
+  return (
+    <div className="bg-slate-600">
+      {/* Move FitlerNav up a level */}
+      <NewsArticleList viewMode={viewMode} handleViewChange={handleViewChange} />
+    </div>
+  );
 };
 
 export default NewsArticleGallery;

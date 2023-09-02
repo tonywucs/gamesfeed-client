@@ -59,8 +59,10 @@ body {
 
 @layer components {
     .pill {
-        @apply flex justify-center items-center w-fit h-fit px-2 py-0.5;
-        @apply font-semibold text-white rounded-lg;
+        @extend .body-sm;
+        @apply flex justify-center items-center z-10 w-fit h-fit px-2 py-0.5;
+        @apply font-semibold text-white rounded-lg line-clamp-1;
+        @apply cursor-pointer hover:underline;
 
         &--misc {
             @extend .pill;
