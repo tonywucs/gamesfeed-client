@@ -19,17 +19,20 @@ interface newsarticle {
     source: string,
     url: string,
     url_to_image: string,
-    read_time: number
+    read_time: number,
+    friend: string
 }
 
-interface article {
+interface input {
     article: newsarticle,
     viewMode: string,
     preferences: any,
-    index: number
+    index: number,
+    getRecommended: boolean,
+    friends: any
 };
 
-const NewsArticleListItem = ({ article, viewMode, preferences, index }: article) => {
+const NewsArticleListItem = ({ article, viewMode, preferences, index, getRecommended, friends }: input) => {
 
     const token = sessionStorage.authToken;
     const [click, setClick] = useState(false);
@@ -84,13 +87,13 @@ const NewsArticleListItem = ({ article, viewMode, preferences, index }: article)
     }
 
     return (
-        <li className={`c-newsArticle ${(viewMode === "headline") && (index === 0) ? "col-span-2 xl:col-span-3" : ""} ${!preferences.includes(article.preference) ? `hidden` : ""}`} style={{ backgroundImage: `url('${article.url_to_image}')` }}>
+        <li className={`c-newsArticle ${(viewMode === "headline") && (index === 0) ? "col-span-2 xl:col-span-3" : ""} ${!preferences.includes(article.preference) ? `hidden` : ""} ${(getRecommended && !friends.includes(article.friend)) ? `hidden` : ""}`} style={{ backgroundImage: `url('${article.url_to_image}')` }}>
             <div className="c-newsArticle__overlay" onClick={handleClick}></div>
             <div className="c-newsArticle__card">
                 <div className="c-newsArticle__cardHeader">
                     <h4 className={`c-newsArticle__textPill self-start ${article.pref_id % 3 === 0 ? "bg-red-500" :
                         article.pref_id % 3 === 1 ? "bg-green-500" :
-                        article.pref_id % 3 === 2 ? "bg-blue-500" :
+                            article.pref_id % 3 === 2 ? "bg-blue-500" :
                                 ""
                         }`}>{article.preference}</h4>
                     <div
@@ -99,7 +102,12 @@ const NewsArticleListItem = ({ article, viewMode, preferences, index }: article)
                     ></div>
                 </div>
                 <div className={`c-newsArticle__sourceRecent ${click || isHovered ? "hidden" : ""}`}>
-                    <p className={`c-newsArticle__textPill bg-slate-600`}>{article.source}</p>
+                    {
+                        getRecommended ?
+                            <p className={`c-newsArticle__textPill bg-slate-600`}>{article.friend}</p>
+                            :
+                            <p className={`c-newsArticle__textPill bg-slate-600`}>{article.source}</p>
+                    }
                     <p className={`c-newsArticle__textPill bg-slate-600`}>{article.read_time}m read time</p>
                 </div>
             </div>

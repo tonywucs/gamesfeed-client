@@ -5,7 +5,9 @@ interface viewMode {
   viewMode: string,
   preferences: any,
   articles: any,
-  results: any
+  results: any,
+  getRecommended: boolean,
+  friends: any
 }
 
 interface newsarticle {
@@ -19,10 +21,11 @@ interface newsarticle {
   source: string,
   url: string,
   url_to_image: string,
-  read_time: number
+  read_time: number,
+  friend: string
 }
 
-const NewsArticleList = ({ viewMode, results, preferences, articles }: viewMode) => {
+const NewsArticleList = ({ viewMode, results, preferences, articles, getRecommended, friends }: viewMode) => {
 
   return (
     <>
@@ -30,28 +33,52 @@ const NewsArticleList = ({ viewMode, results, preferences, articles }: viewMode)
         viewMode === 'headline' ?
           Object.keys(results).map((result: any, i: number) => {
             return (
-              <div key={`${result}${i}`} className={`mt-8 ${!preferences.includes(result) ? "hidden" : ""}`}>
+              <div key={`${result}${i}`} className={`mt-8 ${!getRecommended && !preferences.includes(result) ? "hidden" : ""} ${getRecommended && !friends.includes(result) ? "hidden" : ""}`}>
                 <h2 className={`subheader mb-2 text-white font-bold`}>{result}</h2>
                 <ul className={`c-newsArticleView--grid`} id={result}>
                   {
-                    articles
-                      .filter((article: newsarticle) => {
-                        return article.preference === result
-                      })
-                      .filter((article: newsarticle, i: number) => {
-                        return i < 5
-                      })
-                      .map((article: newsarticle, i: number) => {
-                        return (
-                          <NewsArticleListItem
-                            key={`${article.title}${i}`}
-                            index={i}
-                            article={article}
-                            viewMode={viewMode}
-                            preferences={preferences}
-                          />
-                        )
-                      })
+                    !getRecommended ?
+                      articles
+                        .filter((article: newsarticle) => {
+                          return article.preference === result
+                        })
+                        .filter((article: newsarticle, i: number) => {
+                          return i < 5
+                        })
+                        .map((article: newsarticle, i: number) => {
+                          return (
+                            <NewsArticleListItem
+                              key={`${article.title}${i}`}
+                              index={i}
+                              article={article}
+                              viewMode={viewMode}
+                              preferences={preferences}
+                              getRecommended={getRecommended}
+                              friends={friends}
+                            />
+                          )
+                        })
+                      :
+                      articles
+                        .filter((article: newsarticle) => {
+                          return article.friend === result
+                        })
+                        .filter((article: newsarticle, i: number) => {
+                          return i < 5
+                        })
+                        .map((article: newsarticle, i: number) => {
+                          return (
+                            <NewsArticleListItem
+                              key={`${article.title}${i}`}
+                              index={i}
+                              article={article}
+                              viewMode={viewMode}
+                              preferences={preferences}
+                              getRecommended={getRecommended}
+                              friends={friends}
+                            />
+                          )
+                        })
                   }
                 </ul>
               </div>
@@ -59,7 +86,7 @@ const NewsArticleList = ({ viewMode, results, preferences, articles }: viewMode)
           })
           :
           <>
-            <h2 className={`subheader mb-2 text-white font-bold`}>Personal Feed</h2>
+            <h2 className={`subheader mb-2 text-white font-bold`}>{getRecommended ? "Friend Recommendations" : "Personal Feed"}</h2>
             <ul className={viewMode != "list" ? `c-newsArticleView--grid` : "c-newsArticleView"}>
               {
                 articles
@@ -71,6 +98,8 @@ const NewsArticleList = ({ viewMode, results, preferences, articles }: viewMode)
                         article={article}
                         viewMode={viewMode}
                         preferences={preferences}
+                        getRecommended={getRecommended}
+                        friends={friends}
                       />
                     )
                   })

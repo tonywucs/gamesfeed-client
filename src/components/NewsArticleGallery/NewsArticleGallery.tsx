@@ -17,6 +17,9 @@ const NewsArticleGallery = () => {
   const [viewMode, setViewMode] = useState(sessionStorage.viewMode || "headline")
   const [newsArticles, setNewsArticles] = useState<any>({});
   const [preferences, setPreferences] = useState(sessionStorage.preferences);
+  const [getRecommended, setGetRecommended] = useState(sessionStorage.recommend || false);
+  const [friends, setFriends] = useState(sessionStorage.friends)
+
 
   const getNewsArticles = async () => {
     if (token) {
@@ -38,7 +41,7 @@ const NewsArticleGallery = () => {
       const { data } = await axios.get(`${ENDPOINT}/recommend`, {
         headers: {
           Authorization: `Bearer ${token}`,
-          num_of_articles: '30',
+          num_of_articles: '3',
           sort_by: 'published_at',
           sort_type: 'desc',
           page_number: 0
@@ -49,7 +52,14 @@ const NewsArticleGallery = () => {
   }
 
   useEffect(() => {
-    if (Object.keys(newsArticles).length === 0) { getNewsArticles() }
+    if (Object.keys(newsArticles).length === 0) { 
+      if(getRecommended) {
+        getRecNews()
+      } else {
+        getNewsArticles() 
+      }
+    }
+
   }, [])
 
   if (Object.keys(newsArticles).length === 0) {
@@ -64,6 +74,23 @@ const NewsArticleGallery = () => {
   const handleChangePrefs = (prefs: any) => {
     sessionStorage.preferences = prefs.join(' ')
     setPreferences(prefs.join(' '))
+  }
+
+  const handleChangeFriends = (friendsArr: any) => {
+    sessionStorage.friends = friendsArr.join(' ')
+    setFriends(friendsArr.join(' '))
+  }
+
+  const handleClickRecommend = () => {
+
+    if (!getRecommended) {
+      getRecNews()
+    } else {
+      getNewsArticles()
+    }
+    
+    sessionStorage.recommend = !getRecommended;
+    setGetRecommended(!getRecommended);
   }
 
   const { total_results, results, ...rest} = newsArticles;
@@ -81,11 +108,11 @@ const NewsArticleGallery = () => {
           handleViewChange("headline")
         }} className="px-4 h-8 rounded-lg bg-black text-white cursor-pointer">Headline</span>
         <span onClick={() => {
-          handleViewChange("headline")
-        }} className="px-4 h-8 rounded-lg bg-black text-white cursor-pointer">Headline</span>
+          handleClickRecommend()
+        }} className="px-4 h-8 rounded-lg bg-black text-white cursor-pointer">See Friend Recommendations</span>
       </div>
-      <FilterNav handleChangePrefs={handleChangePrefs} preferences={preferences} totalResults={total_results} results={results} />
-      <NewsArticleList viewMode={viewMode} preferences={preferences} articles={rest.articles} results={results}/>
+      <FilterNav handleChangePrefs={handleChangePrefs} handleChangeFriends={handleChangeFriends} friends={friends} preferences={preferences} totalResults={total_results} results={results} getRecommended={getRecommended}/>
+      <NewsArticleList viewMode={viewMode} preferences={preferences} articles={rest.articles} results={results} getRecommended={getRecommended} friends={friends}/>
     </div>
   );
 };
