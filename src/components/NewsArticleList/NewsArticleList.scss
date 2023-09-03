@@ -4,12 +4,6 @@
 @tailwind utilities;
 
 @layer components {
-    .c-newsArticleGallery {
-        @apply flex flex-col gap-y-2 m-4;
-        @apply md:mx-8;
-        @apply xl:mx-auto xl:max-w-5xl xl:w-full;
-    }
-
     .c-newsArticleView {
         @apply flex flex-col gap-y-2;
 

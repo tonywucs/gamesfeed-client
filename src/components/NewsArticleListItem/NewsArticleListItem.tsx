@@ -24,10 +24,12 @@ interface newsarticle {
 
 interface article {
     article: newsarticle,
-    viewMode: string
+    viewMode: string,
+    preferences: any,
+    index: number
 };
 
-const NewsArticleListItem = ({ article, viewMode }: article) => {
+const NewsArticleListItem = ({ article, viewMode, preferences, index }: article) => {
 
     const token = sessionStorage.authToken;
     const [click, setClick] = useState(false);
@@ -82,7 +84,7 @@ const NewsArticleListItem = ({ article, viewMode }: article) => {
     }
 
     return (
-        <li className={`c-newsArticle ${(viewMode === "headline") ? "col-span-2 xl:col-span-3" : ""}`} style={{ backgroundImage: `url('${article.url_to_image}')` }}>
+        <li className={`c-newsArticle ${(viewMode === "headline") && (index === 0) ? "col-span-2 xl:col-span-3" : ""} ${!preferences.includes(article.preference) ? `hidden` : ""}`} style={{ backgroundImage: `url('${article.url_to_image}')` }}>
             <div className="c-newsArticle__overlay" onClick={handleClick}></div>
             <div className="c-newsArticle__card">
                 <div className="c-newsArticle__cardHeader">

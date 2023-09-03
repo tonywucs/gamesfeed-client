@@ -3,9 +3,9 @@
 @layer components {
     .c-newsArticle {
         @apply h-[75vw] max-h-[15rem] xl:max-h-[20rem] bg-cover bg-center rounded-xl overflow-hidden relative;
-        
+
         &__overlay {
-            @apply absolute top-0 w-full h-full;
+            @apply absolute top-0 w-full h-full cursor-pointer;
 
             &:hover + .c-newsArticle__card .c-newsArticle__sourceRecent {
                 @apply hidden;
@@ -83,6 +83,7 @@
         &__body {
             @apply w-full bg-black/60 transition-all px-4 pb-4 pt-2 text-white;
             @apply h-[12rem] absolute -bottom-[118px] flex flex-col md:justify-between;
+            @apply cursor-pointer;
             
             &--clicked {
                 @apply -translate-y-[60%];
