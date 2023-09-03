@@ -8,35 +8,32 @@ import ReadMoreIcon from '../../assets/icons/readmore.svg';
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/user/recommend';
 
-interface articleObj {
+interface newsarticle {
     id: number,
+    pref_id: number,
+    preference: string,
     title: string,
     author: string,
-    source: string,
     description: string,
+    published_at: string,
+    source: string,
     url: string,
     url_to_image: string,
-    published_at: string
-};
+    read_time: number
+}
 
 interface article {
-    article: articleObj,
-    preference: string,
-    index: number,
-    articleIndex: number,
+    article: newsarticle,
     viewMode: string
 };
 
-const NewsArticleListItem = ({ article, preference, index, articleIndex, viewMode }: article) => {
+const NewsArticleListItem = ({ article, viewMode }: article) => {
 
     const token = sessionStorage.authToken;
     const [click, setClick] = useState(false);
     const [recClick, setRecClick] = useState(false);
     const [userRecommended, setUserRecommended] = useState<any>([]);
-
-    const published = Date.parse(article.published_at);
-    const seen = Date.now()
-    const daysAgo = Math.floor((seen - published) / 86400000);
+    const [isHovered, setIsHovered] = useState(false);
 
     const getRec = async () => {
         const { data } = await axios.get(`${ENDPOINT}`, {
@@ -68,38 +65,44 @@ const NewsArticleListItem = ({ article, preference, index, articleIndex, viewMod
         updateRec(id);
     }
 
+    const handleHoverEnter = () => {
+        setIsHovered(true)
+    }
+
+    const handleHoverLeave = () => {
+        setIsHovered(false)
+    }
+
     useEffect(() => {
         if (userRecommended.length === 0) { getRec() }
     }, [])
 
     if (userRecommended.length === 0) {
-        // Loading display
         return (<div className="c-newsArticle border-2 flex justify-center items-center">Loading...</div>)
     }
 
     return (
-        <li className={`c-newsArticle ${(viewMode === "headline" && articleIndex === 0) ? "col-span-2 xl:col-span-3" : ""}`} style={{ backgroundImage: `url('${article.url_to_image}')` }}>
+        <li className={`c-newsArticle ${(viewMode === "headline") ? "col-span-2 xl:col-span-3" : ""}`} style={{ backgroundImage: `url('${article.url_to_image}')` }}>
             <div className="c-newsArticle__overlay" onClick={handleClick}></div>
             <div className="c-newsArticle__card">
                 <div className="c-newsArticle__cardHeader">
-                    {/* % pref_id */}
-                    <h4 className={`c-newsArticle__textPill self-start ${index % 3 === 0 ? "bg-red-500" :
-                        index % 3 === 1 ? "bg-green-500" :
-                            index % 3 === 2 ? "bg-blue-500" :
+                    <h4 className={`c-newsArticle__textPill self-start ${article.pref_id % 3 === 0 ? "bg-red-500" :
+                        article.pref_id % 3 === 1 ? "bg-green-500" :
+                        article.pref_id % 3 === 2 ? "bg-blue-500" :
                                 ""
-                        }`}>{preference}</h4>
+                        }`}>{article.preference}</h4>
                     <div
-                        className={`c-newsArticle__recommend ${userRecommended.find((art: articleObj) => article.id === art.id) ? "bg-green-600" : ""}`}
+                        className={`c-newsArticle__recommend ${userRecommended.find((recArt: any) => article.id === recArt.id) ? "bg-green-600" : ""}`}
                         onClick={() => { handleRecClick(article.id) }}
                     ></div>
                 </div>
-                <div className={`c-newsArticle__sourceRecent ${click ? "hidden" : ""}`}>
+                <div className={`c-newsArticle__sourceRecent ${click || isHovered ? "hidden" : ""}`}>
                     <p className={`c-newsArticle__textPill bg-slate-600`}>{article.source}</p>
-                    <p className={`c-newsArticle__textPill bg-slate-600`}>{daysAgo} days ago</p>
+                    <p className={`c-newsArticle__textPill bg-slate-600`}>{article.read_time}m read time</p>
                 </div>
             </div>
-            
-            <div className={`c-newsArticle__body ${click ? "c-newsArticle__body--clicked" : ""}`} onClick={handleClick}>
+
+            <div className={`c-newsArticle__body hover:c-newsArticle__body--clicked ${click ? "c-newsArticle__body--clicked" : ""}`} onClick={handleClick} onMouseEnter={handleHoverEnter} onMouseLeave={handleHoverLeave}>
                 <div className="c-newsArticle__info">
                     <h3 className={`c-newsArticle__title`}>{article.title}</h3>
                     <h3 className={viewMode != "list" ? `c-newsArticle__description--grid` : "c-newsArticle__description"}>{article.description}</h3>

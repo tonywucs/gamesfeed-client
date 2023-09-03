@@ -6,6 +6,14 @@
         
         &__overlay {
             @apply absolute top-0 w-full h-full;
+
+            &:hover + .c-newsArticle__card .c-newsArticle__sourceRecent {
+                @apply hidden;
+            }
+
+            &:hover ~ .c-newsArticle__body {
+                @extend .c-newsArticle__body--clicked;
+            }
         }
 
         &__card {

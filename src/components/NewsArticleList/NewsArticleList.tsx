@@ -15,11 +15,25 @@ interface viewMode {
   handleViewChange: (mode: string) => void
 }
 
+interface newsarticle {
+  id: number,
+  pref_id: number,
+  preference: string,
+  title: string,
+  author: string,
+  description: string,
+  published_at: string,
+  source: string,
+  url: string,
+  url_to_image: string,
+  read_time: number
+}
+
 const NewsArticleList = ({ viewMode, handleViewChange }: viewMode) => {
 
   const token = sessionStorage.authToken;
-  const [newsArticles, setNewsArticles] = useState<any>([]);
-  const [filterPref, setFilterPref] = useState({});
+  const [newsArticles, setNewsArticles] = useState<any>({});
+  const [filterPref, setFilterPref] = useState<any>({});
 
   const getNewsArticles = async () => {
     if (token) {
@@ -28,12 +42,13 @@ const NewsArticleList = ({ viewMode, handleViewChange }: viewMode) => {
           Authorization: `Bearer ${token}`,
         }
       })
-      setNewsArticles(data.articles)
+      console.log(data)
+      setNewsArticles(data)
     }
   }
 
   useEffect(() => {
-    if (newsArticles.length === 0) { getNewsArticles() }
+    if (Object.keys(newsArticles).length === 0) { getNewsArticles() }
   }, [])
 
   const handleFilterPref = (pref: any) => {
@@ -54,10 +69,6 @@ const NewsArticleList = ({ viewMode, handleViewChange }: viewMode) => {
     return (<h1>Loading</h1>)
   }
 
-  const totalResults = newsArticles.map((article) => {
-    return article.results
-  })
-
   // Could possibly move some code here out of return statement for readability
   return (
     <>
@@ -73,41 +84,23 @@ const NewsArticleList = ({ viewMode, handleViewChange }: viewMode) => {
             handleViewChange("headline")
           }} className="px-4 h-8 rounded-lg bg-black text-white cursor-pointer">Headline</span>
         </div>
-        <FilterNav handleFilterPref={handleFilterPref} totalResults={totalResults} />
-        {
-          token ?
-            newsArticles
-              .filter((newsArticle) => {
-                if (Object.keys(filterPref).length === 0) {
-                  return true
-                } else {
-                  return filterPref[`${newsArticle.preference}`]
-                }
-              })
-              .map((newsArticle: any, i: number) => {
-                console.log(viewMode != "list");
-                return (
-                  <ul key={`list${newsArticle.preference}${i}`} className={viewMode != "list" ? `c-newsArticleView--grid` : "c-newsArticleView"}>
-                    {
-                      newsArticle.articles.map((article: any, j: number) => {
-                        return (
-                          <NewsArticleListItem
-                            key={`${article.title}${j}`}
-                            index={i}
-                            articleIndex={j}
-                            article={article}
-                            preference={newsArticle.preference}
-                            viewMode={viewMode}
-                          />
-                        )
-                      })
-                    }
-                  </ul>
-                )
-              })
-            :
-            ""
-        }
+        <FilterNav handleFilterPref={handleFilterPref} totalResults={newsArticles.total_results} results={newsArticles.results} />
+        <ul className={viewMode != "list" ? `c-newsArticleView--grid` : "c-newsArticleView"}>
+          {
+            token ?
+              newsArticles.articles
+                .map((article: newsarticle, i: number) => {
+                  return (
+                    <NewsArticleListItem
+                      key={`${article.title}${i}`}
+                      article={article}
+                      viewMode={viewMode}
+                    />
+                  )
+                })
+              : ""
+          }
+        </ul>
       </div>
     </>
   );

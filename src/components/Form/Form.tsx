@@ -32,6 +32,15 @@ const Form = () => {
                 });
 
                 sessionStorage.authToken = data.token;
+
+                const prefs = await axios.get(`${ENDPOINT}/prefs`, {
+                    headers: {
+                        Authorization: `Bearer ${data.token}`,
+                    }
+                })
+
+                sessionStorage.preferences = prefs.data.preferences.map((pref: any) => pref.name).join(' ');
+                
                 navigate('/');
             }
 
