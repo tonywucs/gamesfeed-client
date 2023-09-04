@@ -39,11 +39,11 @@ const FilterNav = ({ handleChangePrefs, totalResults, handleChangeFriends, frien
     const handleClickFilter = (pref: string) => {
         if (multiSelect) {
             if (preferences.includes(pref)) {
-                const prefsArr = preferences.split(' ')
+                const prefsArr = preferences.split(',')
                 prefsArr.splice(prefsArr.findIndex((p: string) => p === pref), 1)
                 handleChangePrefs(prefsArr)
             } else {
-                const prefsArr = preferences.split(' ')
+                const prefsArr = preferences.split(',')
                 prefsArr.push(pref)
                 handleChangePrefs(prefsArr)
             }
@@ -55,11 +55,11 @@ const FilterNav = ({ handleChangePrefs, totalResults, handleChangeFriends, frien
     const handleFriendFilter = (friend: string) => {
         if (multiSelectFriends) {
             if (friends.includes(friend)) {
-                const friendsArr = friends.split(' ')
+                const friendsArr = friends.split(',')
                 friendsArr.splice(friendsArr.findIndex((f: string) => f === friend), 1)
                 handleChangeFriends(friendsArr)
             } else {
-                const friendsArr = friends.split(' ')
+                const friendsArr = friends.split(',')
                 friendsArr.push(friend)
                 handleChangeFriends(friendsArr)
             }
@@ -83,7 +83,7 @@ const FilterNav = ({ handleChangePrefs, totalResults, handleChangeFriends, frien
     let friendsArr: any = []
 
     if (friends) {
-        friendsArr = friends.split(' ')
+        friendsArr = friends.split(',')
     }
 
     return (

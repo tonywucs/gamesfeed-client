@@ -17,7 +17,7 @@ const NewsArticleGallery = () => {
   const [viewMode, setViewMode] = useState(sessionStorage.viewMode || "headline")
   const [newsArticles, setNewsArticles] = useState<any>({});
   const [preferences, setPreferences] = useState(sessionStorage.preferences);
-  const [getRecommended, setGetRecommended] = useState(sessionStorage.recommend || false);
+  const [getRecommended, setGetRecommended] = useState(sessionStorage.recommend === 'true' || false);
   const [friends, setFriends] = useState(sessionStorage.friends)
 
 
@@ -53,7 +53,7 @@ const NewsArticleGallery = () => {
 
   useEffect(() => {
     if (Object.keys(newsArticles).length === 0) { 
-      if(getRecommended) {
+      if (getRecommended) {
         getRecNews()
       } else {
         getNewsArticles() 
@@ -72,13 +72,13 @@ const NewsArticleGallery = () => {
   }
 
   const handleChangePrefs = (prefs: any) => {
-    sessionStorage.preferences = prefs.join(' ')
-    setPreferences(prefs.join(' '))
+    sessionStorage.preferences = prefs.join(',')
+    setPreferences(prefs.join(','))
   }
 
   const handleChangeFriends = (friendsArr: any) => {
-    sessionStorage.friends = friendsArr.join(' ')
-    setFriends(friendsArr.join(' '))
+    sessionStorage.friends = friendsArr.join(',')
+    setFriends(friendsArr.join(','))
   }
 
   const handleClickRecommend = () => {

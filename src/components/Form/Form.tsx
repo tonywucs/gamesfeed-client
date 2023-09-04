@@ -39,14 +39,17 @@ const Form = () => {
                     }
                 })
 
+                console.log(prefs)
+
                 const friends = await await axios.get(`${ENDPOINT}/friends`, {
                     headers: {
                         Authorization: `Bearer ${data.token}`,
                     }
                 });
 
-                sessionStorage.friends = Object.values(friends.data.friends).map((friend: any) => friend.username).join(' ')
-                sessionStorage.preferences = prefs.data.preferences.map((pref: any) => pref.name).join(' ');
+                sessionStorage.friends = Object.values(friends.data.friends).map((friend: any) => friend.username).join(',')
+                sessionStorage.recommend = false
+                sessionStorage.preferences = prefs.data.preferences.map((pref: any) => pref.name).join(',');
 
                 navigate('/');
             }

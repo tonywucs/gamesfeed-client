@@ -26,7 +26,6 @@ interface newsarticle {
 }
 
 const NewsArticleList = ({ viewMode, results, preferences, articles, getRecommended, friends }: viewMode) => {
-
   return (
     <>
       {
