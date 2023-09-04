@@ -1,0 +1,47 @@
+@use '../../styles/globals' as *;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .header {
+        @apply bg-stone-900 sticky top-0 z-50 flex shrink-0 w-full h-24 items-center;
+        
+        &__brand {
+            @apply p-4 text-3xl font-semibold text-stone-700;
+            @apply hover:shadow-md hover:shadow-purple-800 rounded-xl transition-all;
+
+            &:active {
+                @apply text-2xl;
+            }
+        }
+
+        &__brandTail {
+            @apply px-2 text-purple-900 font-bold;
+            @apply border-2 border-purple-900 bg-slate-900 rounded-xl;
+        }
+    }
+    .sideNav {
+        @apply absolute w-12 h-12 ml-4;
+        @apply active:rotate-180 transition-all rounded-lg cursor-pointer;
+
+        &__icon {
+            @apply w-full h-full;
+            filter: invert(5%) sepia(93%) saturate(6937%) hue-rotate(277deg) brightness(90%) contrast(100%);
+        }
+    }
+    .signin {
+        @apply absolute right-0 w-12 h-12 p-1 mr-4;
+        @apply hover:shadow-md hover:shadow-purple-800 rounded-lg transition-all;
+
+        &:active {
+            @apply h-11 w-11;
+        }
+
+        &__icon {
+            @apply w-full h-full;
+            filter: invert(5%) sepia(93%) saturate(6937%) hue-rotate(277deg) brightness(90%) contrast(100%);
+        }
+    }
+}
+

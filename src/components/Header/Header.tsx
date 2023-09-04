@@ -1,4 +1,8 @@
 import { Link } from 'react-router-dom';
+import signinIcon from '../../assets/icons/user-solid.svg';
+import chevronRightIcon from '../../assets/icons/circle-chevron-right-solid.svg';
+
+import './Header.scss';
 
 interface headerOptions {
     handleToggleSideNav: () => void
@@ -6,21 +10,25 @@ interface headerOptions {
 
 const Header = ({ handleToggleSideNav }: headerOptions) => {
     return (
-        <header className="sticky top-0 z-50 flex shrink-0 w-full h-24 bg-red-100 items-center">
+        <header className="header">
             <div
-                className="absolute w-12 h-12 border-2 border-black rounded-lg ml-4"
+                className="sideNav"
                 onClick={handleToggleSideNav}
-            ></div>
+            >
+                <img className="sideNav__icon" src={chevronRightIcon} alt="Chevron open side navigation "></img>
+            </div>
             <Link
                 className="flex max-w-xs mx-auto"
                 to="/"
             >
-                <h1 className="text-3xl">GamesFeed</h1>
+                <h1 className="header__brand">Games<span className="header__brandTail">Feed</span></h1>
             </Link>
             <Link
-                className="absolute right-0 w-12 h-12 border-2 border-black rounded-lg mr-4"
+                className="signin"
                 to="/signup"
-            ></Link>
+            >
+                <img className="signin__icon" src={signinIcon} alt="Sign In Icon"></img>
+            </Link>
         </header>
     );
 };
