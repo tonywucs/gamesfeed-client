@@ -9,6 +9,7 @@ import SideNav from './components/SideNav/SideNav'
 import Form from './components/Form/Form'
 
 import './App.scss'
+import AccountSetup from './components/AccountSetup/AccountSetup'
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         {/* <Route path='/news' element={<UserDashboard />} /> */}
         <Route path='/signup' element={<Form />} />
         <Route path='/login' element={<Form />} />
+        <Route path='/setup' element={<AccountSetup />} />
         <Route path='*' element={<Redirect />} />
       </Routes>
     </BrowserRouter>

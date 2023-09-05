@@ -8,7 +8,7 @@ const Homepage = () => {
   return (
     <main className="bg-slate-600 h-full">
       {/* <NewsArticleGallery /> */}
-      {/* <PreferenceModal /> */}
+      <PreferenceModal />
     </main>
   );
 };

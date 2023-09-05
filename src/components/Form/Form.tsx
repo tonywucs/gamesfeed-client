@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import checkIcon from '../../assets/icons/square-check-solid.svg';
 
 import './Form.scss';
 
@@ -12,6 +13,7 @@ const Form = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [togglePass, setTogglePass] = useState(false);
+    const [complete, setComplete] = useState(false);
 
     const handleSubmit = async (e: any) => {
         e.preventDefault();
@@ -19,16 +21,21 @@ const Form = () => {
         try {
             if (location.pathname === '/signup') {
                 await axios.post(`${ENDPOINT}${location.pathname}`, {
-                    username: e.target.username.value,
-                    password: e.target.password.value
+                    username: e.target.username.value.trim(),
+                    password: e.target.password.value.trim()
                 });
 
-                navigate('/');
+                setComplete(true);
+
+                setTimeout(() => {
+                    setComplete(false);
+                    navigate('/login')
+                }, 3000);
 
             } else if (location.pathname === '/login') {
                 const { data } = await axios.post(`${ENDPOINT}${location.pathname}`, {
-                    username: e.target.username.value,
-                    password: e.target.password.value
+                    username: e.target.username.value.trim(),
+                    password: e.target.password.value.trim()
                 });
 
                 sessionStorage.authToken = data.token;
@@ -38,22 +45,29 @@ const Form = () => {
                         Authorization: `Bearer ${data.token}`,
                     }
                 })
-
-                console.log(prefs)
-
-                const friends = await await axios.get(`${ENDPOINT}/friends`, {
+                
+                const friends = await axios.get(`${ENDPOINT}/friends`, {
                     headers: {
                         Authorization: `Bearer ${data.token}`,
                     }
                 });
 
-                sessionStorage.friends = Object.values(friends.data.friends).map((friend: any) => friend.username).join(',')
-                sessionStorage.recommend = false
-                sessionStorage.preferences = prefs.data.preferences.map((pref: any) => pref.name).join(',');
+                sessionStorage.recommend = false;
 
-                navigate('/');
+                if (!(prefs.data.preferences.length === 0)) {
+                    sessionStorage.preferences = prefs.data.preferences.map((pref: any) => pref.name).join(',');
+                }
+
+                if (!(friends.data.friends.length === 0)) {
+                    sessionStorage.friends = Object.values(friends.data.friends).map((friend: any) => friend.username).join(',')
+                }
+                
+                if ((prefs.data.preferences.length === 0) || (friends.data.friends.length === 0)) {
+                    navigate('/setup')
+                } else {
+                    navigate('/');
+                }
             }
-
         } catch (err) {
             console.error(err);
         }
@@ -63,14 +77,27 @@ const Form = () => {
         setTogglePass(!togglePass);
     }
 
+    const handleSignUpLink = () => {
+        navigate('/signup')
+    }
+
+    if (complete) {
+        return (
+            <div className="flex flex-col justify-center text-white p-4 items-center w-full h-full bg-stone-900">
+                <h1 className="font-semibold flex justify-center items-center">Sign Up Complete!<span><img className="form__redirect" src={checkIcon} alt="Check mark" /></span></h1>
+                <h3 className="font-semibold flex justify-center items-center text-center">Congratulations! You're one step closer to saving a few clicks for your news! Redirecting back to the Login screen soon.</h3>
+            </div>
+        )
+    }
+
     return (
-        <section className="form h-full flex items-center">
-            <form onSubmit={handleSubmit} className="flex flex-col w-full px-4">
-                <h2 className="flex justify-center mb-4 text-3xl font-bold">
+        <section className="form__wrapper">
+            <form onSubmit={handleSubmit} className="form">
+                <h2 className="form__title">
                     {location.pathname === '/signup' ? "Sign Up Form" : "Login Form"}
                 </h2>
                 <div className="flex flex-col">
-                    <label htmlFor="username">Username</label>
+                    <label className="miniheader" htmlFor="username">Username</label>
                     <input
                         name="username"
                         type="text"
@@ -78,7 +105,7 @@ const Form = () => {
                     />
                 </div>
                 <div className="flex flex-col mt-4">
-                    <label htmlFor="password">Password</label>
+                    <label className="miniheader" htmlFor="password">Password</label>
                     <input
                         name="password"
                         type={!togglePass ? "password" : "text"}
@@ -86,13 +113,22 @@ const Form = () => {
                     />
                 </div>
                 <div
-                    className="flex justify-end items-center gap-x-4 mt-2"
-                    onClick={handleReveal}
+                    className={`flex items-center mt-2 ${location.pathname === '/login' ? "justify-between" : "justify-end"}`}
                 >
-                    <p>{!togglePass ? "Show Password" : "Hide Password"}</p>
-                    <div className={`w-4 h-4 border-2 ${!togglePass ? "bg-white" : "bg-blue-500"} `} ></div>
+                    {
+                        location.pathname === '/login' ?
+                            <div className="flex gap-x-2 items-center">
+                                <p className="">Don't have an account?</p>
+                                <span onClick={handleSignUpLink} className="form__signupLink">Sign Up!</span>
+                            </div>
+                            : ""
+                    }
+                    <div className="flex gap-x-2 items-center" onClick={handleReveal}>
+                        <p className="body-sm">Show/Hide Password</p>
+                        <div className={`form__showPass ${!togglePass ? "bg-stone-400" : "bg-purple-900"} `} ></div>
+                    </div>
                 </div>
-                <button type="submit" className="self-end w-fit my-4 px-4 py-2 bg-green-500 rounded-lg">
+                <button type="submit" className="form__submitBtn">
                     {location.pathname === '/signup' ? "Sign Up" : "Login"}
                 </button>
             </form>

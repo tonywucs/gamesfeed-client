@@ -1,14 +1,45 @@
+@use '../../styles/globals' as *;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-// @use '../../styles/globals' as *;
 
 @layer components {
     .form {
-        @apply bg-red-500;
+        @apply flex flex-col w-full md:max-w-xl mx-4 md:mx-auto xl:mx-auto;
+
+        &__redirect {
+            @apply w-32 h-32;
+            filter: invert(45%) sepia(90%) saturate(419%) hue-rotate(89deg) brightness(93%) contrast(95%);
+        }
+
+        &__wrapper {
+            @apply bg-stone-900 text-stone-400 h-full flex items-center;
+        }
+
+        &__title {
+            @apply flex justify-center mb-4 text-3xl font-bold;
+        }
 
         &__field {
             @apply h-10 mt-1 pl-2 border-2 border-slate-200 rounded-xl focus:ring-0 focus:outline-none;
+            @apply focus:text-stone-900;
+        }
+
+        &__reminder {
+            @apply body-sm hidden md:inline-block;
+        }
+
+        &__signupLink {
+            @apply body-sm font-semibold hover:underline cursor-pointer;
+        }
+
+        &__showPass {
+            @apply w-4 h-4 border-2 border-stone-400;
+        }
+
+        &__submitBtn {
+            @apply body-md font-semibold self-end w-fit my-4 px-4 py-2;  
+            @apply hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all;
         }
     }
 }

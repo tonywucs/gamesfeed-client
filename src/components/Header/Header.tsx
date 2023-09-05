@@ -25,7 +25,7 @@ const Header = ({ handleToggleSideNav }: headerOptions) => {
             </Link>
             <Link
                 className="signin"
-                to="/signup"
+                to="/login"
             >
                 <img className="signin__icon" src={signinIcon} alt="Sign In Icon"></img>
             </Link>
