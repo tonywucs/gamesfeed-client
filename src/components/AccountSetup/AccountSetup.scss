@@ -1,0 +1,13 @@
+@use '../../styles/globals' as *;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .friend {
+        &__icon {
+            @apply w-2/3 h-2/3;
+            filter: invert(5%) sepia(93%) saturate(6937%) hue-rotate(277deg) brightness(90%) contrast(100%);
+        }
+    }
+}

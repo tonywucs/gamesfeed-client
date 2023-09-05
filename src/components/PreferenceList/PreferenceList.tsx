@@ -7,10 +7,11 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/user';
 
 interface obj {
-    hidden: boolean
+    action: boolean,
+    getPrefsOnAction: (prefs: any, next: any) => void
 }
 
-const PreferenceList = ({ hidden }: obj) => {
+const PreferenceList = ({ action, getPrefsOnAction }: obj) => {
 
     const token = sessionStorage.authToken;
     const navigate = useNavigate();
@@ -101,10 +102,14 @@ const PreferenceList = ({ hidden }: obj) => {
                 }
             </ul>
 
-            <div className={`flex justify-center items-center body-md font-semibold w-fit my-4 px-4 py-2 cursor-pointer hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all ${hidden ? "hidden" : ""}`}
+            <div className={`flex justify-center items-center body-md font-semibold w-fit my-4 px-4 py-2 cursor-pointer text-slate-500 hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all`}
                 onClick={() => {
-                    handleSubmitPrefs()
-                }}>Submit
+                    if (action) {
+                        getPrefsOnAction(currentPrefs, { set_prefs: true })
+                    } else {
+                        handleSubmitPrefs()
+                    }
+                }}> {action ? "Next" : "Submit"}
             </div>
         </div>
 
