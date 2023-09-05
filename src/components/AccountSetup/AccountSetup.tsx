@@ -12,13 +12,8 @@ const ENDPOINT = SERVER_URL + '/user';
 const AccountSetup = () => {
 
     const token = sessionStorage.authToken;
-    // const friends = sessionStorage.friends;
-    // const preferences = sessionStorage.preferences;
-    const friends = false;
-    const preferences = true;
-    //prob state for both pref and friends
+    const [prefs, setPrefs] = useState<any>(false);
     const [currentFriends, setCurrentFriends] = useState<any>(false);
-    const [currentPrefs, setCurrentPrefs] = useState<any>(false);
     const [randomFriends, setRandomFriends] = useState<any>(null);
     const [addFriend, setAddFriend] = useState<any>(null);
     const navigate = useNavigate();
@@ -41,24 +36,21 @@ const AccountSetup = () => {
         })
     }
 
-    const setUserPrefs = async () => {
-        const changedPrefs = {
-            preferences: sessionStorage.preferences.split(',')
-        }
-
-        const { data } = await axios.post(`${ENDPOINT}/prefs`, changedPrefs, {
+    const getPrefs = async () => {
+        const userPreferences = await axios.get(`${ENDPOINT}/prefs`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
-        })
-    }
+        });
 
-    const handleSetPrefs = () => {
-        setUserPrefs();
+        if (userPreferences.data.preferences.length === 0) {
+            setPrefs([])
+        } else {
+            setPrefs(userPreferences.data.preferences)
+        }
     }
 
     const handleAdd = (friend: string) => {
-        
         
     }
 
@@ -68,6 +60,7 @@ const AccountSetup = () => {
 
     useEffect(() => {
         if (!randomFriends) { getFriends() }
+        if (!prefs) { getPrefs() }
     }, []);
 
     if (!token) {
@@ -82,11 +75,11 @@ const AccountSetup = () => {
         )
     }
 
-    if (!currentPrefs) {
+    if (prefs.length === 0) {
         return (
             <div className="flex flex-col justify-center items-center w-full h-full bg-stone-900 text-slate-300 py-4">
                 <h1>Let's pick some games</h1>
-                <PreferenceList />
+                <PreferenceList hidden={true}/>
             </div>
         )
     }
@@ -109,11 +102,11 @@ const AccountSetup = () => {
                     }
 
                 </div>
-                <div className="flex justify-center items-center body-md font-semibold self-end w-fit my-4 px-4 py-2 hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all"
+                {/* <div className="flex justify-center items-center body-md font-semibold self-end w-fit my-4 px-4 py-2 hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all"
                     onClick={handleSetPrefs}
                 >
                     Submit
-                </div>
+                </div> */}
             </div>
         )
     }

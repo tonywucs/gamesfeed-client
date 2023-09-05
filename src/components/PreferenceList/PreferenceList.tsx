@@ -6,7 +6,11 @@ import axios from 'axios';
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/user';
 
-const PreferenceList = () => {
+interface obj {
+    hidden: boolean
+}
+
+const PreferenceList = ({ hidden }: obj) => {
 
     const token = sessionStorage.authToken;
     const navigate = useNavigate();
@@ -97,7 +101,7 @@ const PreferenceList = () => {
                 }
             </ul>
 
-            <div className="flex justify-center items-center body-md font-semibold w-fit my-4 px-4 py-2 cursor-pointer hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all"
+            <div className={`flex justify-center items-center body-md font-semibold w-fit my-4 px-4 py-2 cursor-pointer hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all ${hidden ? "hidden" : ""}`}
                 onClick={() => {
                     handleSubmitPrefs()
                 }}>Submit

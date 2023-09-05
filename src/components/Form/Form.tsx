@@ -39,30 +39,15 @@ const Form = () => {
                 });
 
                 sessionStorage.authToken = data.token;
+                sessionStorage.recommend = false;
 
-                const prefs = await axios.get(`${ENDPOINT}/prefs`, {
+                const isNewUser = await axios.get(`${ENDPOINT}`, {
                     headers: {
                         Authorization: `Bearer ${data.token}`,
                     }
                 })
                 
-                const friends = await axios.get(`${ENDPOINT}/friends`, {
-                    headers: {
-                        Authorization: `Bearer ${data.token}`,
-                    }
-                });
-
-                sessionStorage.recommend = false;
-
-                if (!(prefs.data.preferences.length === 0)) {
-                    sessionStorage.preferences = prefs.data.preferences.map((pref: any) => pref.name).join(',');
-                }
-
-                if (!(friends.data.friends.length === 0)) {
-                    sessionStorage.friends = Object.values(friends.data.friends).map((friend: any) => friend.username).join(',')
-                }
-                
-                if ((prefs.data.preferences.length === 0) || (friends.data.friends.length === 0)) {
+                if (isNewUser.data.new_user) {
                     navigate('/setup')
                 } else {
                     navigate('/');
