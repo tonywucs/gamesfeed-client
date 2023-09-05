@@ -37,7 +37,7 @@ const Form = () => {
                     username: e.target.username.value.trim(),
                     password: e.target.password.value.trim()
                 });
-
+                
                 sessionStorage.authToken = data.token;
                 sessionStorage.recommend = false;
 

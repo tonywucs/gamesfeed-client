@@ -82,7 +82,7 @@ const NewsArticleListItem = ({ article, viewMode, preferences, index, getRecomme
         if (userRecommended.length === 0) { getRec() }
     }, [])
 
-    if (userRecommended.length === 0) {
+    if (!article && userRecommended.length === 0) {
         return (<div className="c-newsArticle border-2 flex justify-center items-center">Loading...</div>)
     }
 

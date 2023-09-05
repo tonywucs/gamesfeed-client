@@ -7,6 +7,7 @@ import FilterNav from '../FilterNav/FilterNav';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/news';
+const ENDPOINT_USER = SERVER_URL + '/user';
 
 import './NewsArticleGallery.scss';
 
@@ -51,21 +52,46 @@ const NewsArticleGallery = () => {
     }
   }
 
+  const getFriendsAndPrefs = async () => {
+    const prefs = await axios.get(`${ENDPOINT_USER}/prefs`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+
+    const friends = await axios.get(`${ENDPOINT_USER}/friends`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+
+    if (!(prefs.data.preferences.length === 0)) {
+      sessionStorage.preferences = prefs.data.preferences.map((pref: any) => pref.name).join(',');
+    }
+
+    if (!(friends.data.friends.length === 0)) {
+      sessionStorage.friends = Object.values(friends.data.friends).map((friend: any) => friend.username).join(',')
+    }
+  }
+
   useEffect(() => {
-    if (Object.keys(newsArticles).length === 0) { 
+    if (Object.keys(newsArticles).length === 0) {
+      getFriendsAndPrefs()
       if (getRecommended) {
         getRecNews()
       } else {
-        getNewsArticles() 
+        getNewsArticles()
       }
     }
 
   }, [])
 
+  console.log(newsArticles)
+
   if (Object.keys(newsArticles).length === 0) {
     return (<h1>Loading</h1>)
   }
-  
+
   function handleViewChange(mode: string) {
     sessionStorage.viewMode = mode;
     setViewMode(mode);
@@ -88,12 +114,12 @@ const NewsArticleGallery = () => {
     } else {
       getNewsArticles()
     }
-    
+
     sessionStorage.recommend = !getRecommended;
     setGetRecommended(!getRecommended);
   }
 
-  const { total_results, results, ...rest} = newsArticles;
+  const { total_results, results, ...rest } = newsArticles;
 
   return (
     <div className={`c-newsArticleGallery`}>
@@ -111,8 +137,8 @@ const NewsArticleGallery = () => {
           handleClickRecommend()
         }} className="px-4 h-8 rounded-lg bg-black text-white cursor-pointer">See Friend Recommendations</span>
       </div>
-      <FilterNav handleChangePrefs={handleChangePrefs} handleChangeFriends={handleChangeFriends} friends={friends} preferences={preferences} totalResults={total_results} results={results} getRecommended={getRecommended}/>
-      <NewsArticleList viewMode={viewMode} preferences={preferences} articles={rest.articles} results={results} getRecommended={getRecommended} friends={friends}/>
+      <FilterNav handleChangePrefs={handleChangePrefs} handleChangeFriends={handleChangeFriends} friends={friends} preferences={preferences} totalResults={total_results} results={results} getRecommended={getRecommended} />
+      <NewsArticleList viewMode={viewMode} preferences={preferences} articles={rest.articles} results={results} getRecommended={getRecommended} friends={friends} />
     </div>
   );
 };
