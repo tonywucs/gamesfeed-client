@@ -10,20 +10,13 @@
     box-sizing: border-box;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-}
-
-#root {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    align-items:stretch;
-    align-content:stretch;
-}
-
 @layer base {
+    body {
+        margin: 0;
+        padding: 0;
+        @apply bg-stone-900;
+    }
+
     h1, .page-header {
         @apply text-3xl md:text-4xl;
     }

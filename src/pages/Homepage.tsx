@@ -6,9 +6,9 @@ import SideNav from "../components/SideNav/SideNav";
 const Homepage = () => {
 
   return (
-    <main className="bg-slate-600 h-full">
-      {/* <NewsArticleGallery /> */}
-      <PreferenceModal />
+    <main className="bg-stone-900 h-full">
+      <NewsArticleGallery />
+      {/* <PreferenceModal /> */}
     </main>
   );
 };

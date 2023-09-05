@@ -76,7 +76,7 @@ const Form = () => {
     }
 
     return (
-        <section className="form__wrapper">
+        <section className="form__wrapper mt-12">
             <form onSubmit={handleSubmit} className="form">
                 <h2 className="form__title">
                     {location.pathname === '/signup' ? "Sign Up Form" : "Login Form"}

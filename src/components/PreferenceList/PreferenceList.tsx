@@ -102,7 +102,7 @@ const PreferenceList = ({ action, getPrefsOnAction }: obj) => {
                 }
             </ul>
 
-            <div className={`flex justify-center items-center body-md font-semibold w-fit my-4 px-4 py-2 cursor-pointer text-slate-500 hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all`}
+            <div className={`flex justify-center items-center body-md font-semibold w-fit my-4 px-4 py-2 cursor-pointer text-slate-400 hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all`}
                 onClick={() => {
                     if (action) {
                         getPrefsOnAction(currentPrefs, { set_prefs: true })

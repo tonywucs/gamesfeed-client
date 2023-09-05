@@ -1,27 +1,47 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# GamesFeed
 
-Currently, two official plugins are available:
+A personalized newsfeed for video game news.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Installation
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```bash
+  npm i
+  npm run dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+    
+## Features
+
+- Filter your newsfeed by games, friends and recommendations.
+
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`VITE_SERVER_URL`
+
+
+## Tech Stack
+
+React, TailwindCSS, SASS
+
+
+## Lessons Learned
+
+Never underestimate the front-end aspect of a project. Also the front-end can go so far as the content that is available. In the process of completing this capstone there were quite a few components which required new fields of data from my database. Iterating through essential features and applying those changes through both the front and backends was a fun experience.
+
+
+## Roadmap
+
+- Increased UI customization options
+- Discord integration to ping servers for updated news
+- Add communities feature to post relevant articles for a group of friends or members
+- Add the ability to comment on news articles
+
+
+## Authors
+
+- [@tonywucs](https://www.github.com/tonywucs)
+
