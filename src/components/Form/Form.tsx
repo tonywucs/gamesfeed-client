@@ -76,7 +76,7 @@ const Form = () => {
     }
 
     return (
-        <section className="form__wrapper mt-12">
+        <section className="form__wrapper pt-12">
             <form onSubmit={handleSubmit} className="form">
                 <h2 className="form__title">
                     {location.pathname === '/signup' ? "Sign Up Form" : "Login Form"}
@@ -103,17 +103,17 @@ const Form = () => {
                     {
                         location.pathname === '/login' ?
                             <div className="flex gap-x-2 items-center">
-                                <p className="">Don't have an account?</p>
+                                <p className="text-slate-300">Don't have an account?</p>
                                 <span onClick={handleSignUpLink} className="form__signupLink">Sign Up!</span>
                             </div>
                             : ""
                     }
                     <div className="flex gap-x-2 items-center" onClick={handleReveal}>
                         <p className="body-sm">Show/Hide Password</p>
-                        <div className={`form__showPass ${!togglePass ? "bg-stone-400" : "bg-purple-900"} `} ></div>
+                        <div className={`form__showPass ${!togglePass ? "bg-slate-300" : "bg-slate-900"} `} ></div>
                     </div>
                 </div>
-                <button type="submit" className="form__submitBtn">
+                <button type="submit" className="form__submitBtn font-semibold text-slate-900 bg-purple-400">
                     {location.pathname === '/signup' ? "Sign Up" : "Login"}
                 </button>
             </form>

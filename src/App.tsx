@@ -14,24 +14,32 @@ import AccountSetup from './components/AccountSetup/AccountSetup'
 function App() {
 
   const [toggleSideNav, setToggleSideNav] = useState(false);
+  const [toggleDarkMode, setToggleDarkMode] = useState(false);
 
   const handleToggleSideNav = () => {
     setToggleSideNav(!toggleSideNav);
   }
 
+  const handleToggleDarkMode = () => {
+    setToggleDarkMode(!toggleDarkMode);
+  }
+
   return (
-    <BrowserRouter>
-      <Header handleToggleSideNav={handleToggleSideNav} />
-      <SideNav toggleSideNav={toggleSideNav} handleToggleSideNav={handleToggleSideNav} />
-      <Routes>
-        <Route path='/' element={<Homepage />} />
-        {/* <Route path='/news' element={<UserDashboard />} /> */}
-        <Route path='/signup' element={<Form />} />
-        <Route path='/login' element={<Form />} />
-        <Route path='/setup' element={<AccountSetup />} />
-        <Route path='*' element={<Redirect />} />
-      </Routes>
-    </BrowserRouter>
+    <div className={toggleDarkMode ? "dark" : ""}>
+      <BrowserRouter>
+        <Header handleToggleSideNav={handleToggleSideNav} handleToggleDarkMode={handleToggleDarkMode} toggleDarkMode={toggleDarkMode}/>
+        <SideNav toggleSideNav={toggleSideNav} handleToggleSideNav={handleToggleSideNav} />
+        <Routes>
+          <Route path='/' element={<Homepage toggleDarkMode={toggleDarkMode}/>} />
+          {/* <Route path='/news' element={<UserDashboard />} /> */}
+          <Route path='/signup' element={<Form />} />
+          <Route path='/login' element={<Form />} />
+          <Route path='/setup' element={<AccountSetup />} />
+          <Route path='*' element={<Redirect />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
+    
   )
 }
 

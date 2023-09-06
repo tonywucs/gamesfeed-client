@@ -1,14 +1,25 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import NewsArticleGallery from "../components/NewsArticleGallery/NewsArticleGallery";
 import '../App.scss';
 import PreferenceModal from "../components/PreferenceModal/PreferenceModal";
-import SideNav from "../components/SideNav/SideNav";
+// import SideNav from "../components/SideNav/SideNav";
 
-const Homepage = () => {
+const Homepage = ({toggleDarkMode}: any) => {
+
+  const [togglePrefModal, setTogglePrefModal] = useState(false);
+  const navigate = useNavigate();
+
+  const handleTogglePrefs = () => {
+    setTogglePrefModal(!togglePrefModal);
+    navigate('/');
+  }
 
   return (
-    <main className="bg-stone-900 h-full">
-      <NewsArticleGallery />
-      {/* <PreferenceModal /> */}
+    <main className={`h-full`}>
+      <NewsArticleGallery handleTogglePrefs={handleTogglePrefs} toggleDarkMode={toggleDarkMode}/>
+      {togglePrefModal && <PreferenceModal handleTogglePrefs={handleTogglePrefs}/>}
     </main>
   );
 };

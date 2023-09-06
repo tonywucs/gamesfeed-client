@@ -62,7 +62,7 @@ const NewsArticleList = ({ viewMode, results, preferences, articles, getRecommen
                         .filter((article: newsarticle) => {
                           return article.friend === result
                         })
-                        .filter((article: newsarticle, i: number) => {
+                        .filter((_article: newsarticle, i: number) => {
                           return i < 5
                         })
                         .map((article: newsarticle, i: number) => {

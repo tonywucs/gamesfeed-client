@@ -8,10 +8,11 @@ const ENDPOINT = SERVER_URL + '/user';
 
 interface obj {
     action: boolean,
-    getPrefsOnAction: (prefs: any, next: any) => void
+    getPrefsOnAction: (prefs: any, next: any) => void,
+    handleTogglePrefs: () => void
 }
 
-const PreferenceList = ({ action, getPrefsOnAction }: obj) => {
+const PreferenceList = ({ action, getPrefsOnAction, handleTogglePrefs }: obj) => {
 
     const token = sessionStorage.authToken;
     const navigate = useNavigate();
@@ -54,7 +55,7 @@ const PreferenceList = ({ action, getPrefsOnAction }: obj) => {
             preferences: Object.entries(currentPrefs).filter((pref: any) => pref[1]).map((pref) => pref[0])
         }
 
-        const { data } = await axios.post(`${ENDPOINT}/prefs`, newPrefs, {
+        await axios.post(`${ENDPOINT}/prefs`, newPrefs, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -108,6 +109,7 @@ const PreferenceList = ({ action, getPrefsOnAction }: obj) => {
                         getPrefsOnAction(currentPrefs, { set_prefs: true })
                     } else {
                         handleSubmitPrefs()
+                        handleTogglePrefs()
                     }
                 }}> {action ? "Next" : "Submit"}
             </div>

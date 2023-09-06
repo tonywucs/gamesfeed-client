@@ -34,12 +34,12 @@
         }
 
         &__showPass {
-            @apply w-4 h-4 border-2 border-stone-400;
+            @apply w-4 h-4 border-2 border-slate-300;
         }
 
         &__submitBtn {
             @apply body-md font-semibold self-end w-fit my-4 px-4 py-2;  
-            @apply hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all;
+            @apply hover:shadow-md hover:shadow-purple-300 hover:text-slate-300 rounded-lg transition-all;
         }
     }
 }

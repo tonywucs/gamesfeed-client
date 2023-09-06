@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/user';
 
-const FilterNav = ({ handleChangePrefs, totalResults, handleChangeFriends, friends, preferences, results, getRecommended }: any) => {
+const FilterNav = ({ handleChangePrefs, handleChangeFriends, friends, preferences, results, getRecommended }: any) => {
 
     const token = sessionStorage.authToken;
     const [userPref, setUserPref] = useState<any[]>([]);

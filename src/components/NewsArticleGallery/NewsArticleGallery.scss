@@ -5,8 +5,31 @@
 
 @layer components {
     .c-newsArticleGallery {
-        @apply flex flex-col gap-y-2 m-4;
+        @apply flex flex-col gap-y-2 p-4;
         @apply md:mx-8;
         @apply xl:mx-auto xl:max-w-5xl xl:w-full;
+
+        &__icon {
+            @apply flex flex-col justify-center items-center p-1.5 h-16 w-16 border-2 border-stone-600 rounded-xl text-white cursor-pointer hover:shadow-md;
+        
+        
+            &--clicked {
+                @apply shadow-md shadow-stone-900 dark:shadow-purple-300;
+            }
+
+            &--dark {
+                @apply hover:shadow-stone-900;
+            }
+        }
+
+        &__iconImg {
+            @apply w-full h-full;
+            filter: invert(14%) sepia(54%) saturate(4216%) hue-rotate(266deg) brightness(88%) contrast(98%);
+            
+            &--dark {
+                @apply w-full h-full;
+                filter: invert(62%) sepia(10%) saturate(4901%) hue-rotate(219deg) brightness(98%) contrast(103%);
+            }
+        }
     }
 }
