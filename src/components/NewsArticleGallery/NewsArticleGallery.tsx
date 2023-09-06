@@ -29,18 +29,18 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
   const [getRecommended, setGetRecommended] = useState(sessionStorage.recommend === 'true' || false);
   const [friends, setFriends] = useState(sessionStorage.friends)
 
-  const getUnregistered = async () => {
-    const { data } = await axios.get(`${ENDPOINT}/unregistered`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        num_of_articles: '30',
-        sort_by: 'published_at',
-        sort_type: 'desc',
-        page_number: 0
-      }
-    })
-    setNewsArticles(data)
-  }
+  // const getUnregistered = async () => {
+  //   const { data } = await axios.get(`${ENDPOINT}/unregistered`, {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //       num_of_articles: '30',
+  //       sort_by: 'published_at',
+  //       sort_type: 'desc',
+  //       page_number: 0
+  //     }
+  //   })
+  //   setNewsArticles(data)
+  // }
 
   const getNewsArticles = async () => {
     if (token) {

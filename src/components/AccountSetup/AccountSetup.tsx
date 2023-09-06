@@ -9,7 +9,7 @@ import './AccountSetup.scss';
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/user';
 
-const AccountSetup = () => {
+const AccountSetup = ({handleTogglePrefs}: any) => {
 
     const token = sessionStorage.authToken;
     const [accSetup, setAccSetup] = useState<any>({
@@ -117,7 +117,7 @@ const AccountSetup = () => {
         return (
             <div className="flex flex-col justify-center items-center w-full h-full bg-stone-900 text-slate-300 py-4">
                 <h1>Let's pick some games</h1>
-                <PreferenceList action={true} getPrefsOnAction={getPrefsOnAction} />
+                <PreferenceList handleTogglePrefs={handleTogglePrefs} action={true} getPrefsOnAction={getPrefsOnAction} />
             </div>
         )
     }

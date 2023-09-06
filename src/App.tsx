@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 
 import Homepage from './pages/Homepage'
 import Redirect from './pages/Redirect'
@@ -15,7 +15,13 @@ function App() {
 
   const [toggleSideNav, setToggleSideNav] = useState(false);
   const [toggleDarkMode, setToggleDarkMode] = useState(false);
-
+  const [togglePrefModal, setTogglePrefModal] = useState(false);
+  const navigate = useNavigate();
+  
+  const handleTogglePrefs = () => {
+    setTogglePrefModal(!togglePrefModal);
+    navigate('/');
+  }
   const handleToggleSideNav = () => {
     setToggleSideNav(!toggleSideNav);
   }
@@ -30,11 +36,11 @@ function App() {
         <Header handleToggleSideNav={handleToggleSideNav} handleToggleDarkMode={handleToggleDarkMode} toggleDarkMode={toggleDarkMode}/>
         <SideNav toggleSideNav={toggleSideNav} handleToggleSideNav={handleToggleSideNav} />
         <Routes>
-          <Route path='/' element={<Homepage toggleDarkMode={toggleDarkMode}/>} />
+          <Route path='/' element={<Homepage togglePrefModal={togglePrefModal} handleTogglePrefs={handleTogglePrefs} toggleDarkMode={toggleDarkMode}/>} />
           {/* <Route path='/news' element={<UserDashboard />} /> */}
           <Route path='/signup' element={<Form />} />
           <Route path='/login' element={<Form />} />
-          <Route path='/setup' element={<AccountSetup />} />
+          <Route path='/setup' element={<AccountSetup handleTogglePrefs={handleTogglePrefs} />} />
           <Route path='*' element={<Redirect />} />
         </Routes>
       </BrowserRouter>

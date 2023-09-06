@@ -1,11 +1,11 @@
-import React from 'react';
+// import React from 'react';
 
-const FriendsList = () => {
-    return (
-        <div>
+// const FriendsList = () => {
+//     return (
+//         <div>
             
-        </div>
-    );
-};
+//         </div>
+//     );
+// };
 
-export default FriendsList;
+// export default FriendsList;

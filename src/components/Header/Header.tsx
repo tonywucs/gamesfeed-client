@@ -26,6 +26,9 @@ const Header = ({ handleToggleSideNav, handleToggleDarkMode, toggleDarkMode }: h
             >
                 <h1 className="header__brand flex gap-x-1 items-center">Games<span className="header__brandTail p-1.5">Feed</span></h1>
             </Link>
+            <div>
+                <div className="w-8 h-8 bg-green-500" onClick={handleToggleDarkMode}>{toggleDarkMode ? "Light Mode" : "Dark Mode"}</div>
+            </div>
             <Link
                 className="signin"
                 to="/login"
