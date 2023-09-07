@@ -112,7 +112,7 @@ const PreferenceList = ({ action, getPrefsOnAction, handleTogglePrefs, handleCha
                     } else {
                         handleSubmitPrefs()
                         handleTogglePrefs()
-                        handleChangePrefs(currentPrefs)
+                        handleChangePrefs(Object.entries(currentPrefs).filter((pref: any) => pref[1]).map((pref) => pref[0]))
                     }
                 }}> {action ? "Next" : "Submit"}
             </div>

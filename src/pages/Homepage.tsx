@@ -43,11 +43,11 @@ const Homepage = ({toggleDarkMode, togglePrefModal, handleTogglePrefs}: any) => 
   }
 
   const handleChangePrefs = (prefs: any) => {
-    setPreferences(Object.entries(prefs).filter((pref: any) => pref[1]).map((pref) => pref[0]));
+    setPreferences(prefs.join(","));
   }
 
   const handleChangeFriends = (friendsArr: any) => {
-    setFriends(friendsArr.map((friend: any) => friend.name).join(','));
+    setFriends(friendsArr.join(','));
   }
 
   useEffect(() => {

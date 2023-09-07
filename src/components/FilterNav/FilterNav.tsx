@@ -37,6 +37,7 @@ const FilterNav = ({ handleChangePrefs, handleChangeFriends, friends, preference
     }, [preferences])
 
     const handleClickFilter = (pref: string) => {
+        console.log(preferences)
         if (multiSelect) {
             if (preferences.includes(pref)) {
                 const prefsArr = preferences.split(',')
