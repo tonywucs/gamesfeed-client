@@ -89,7 +89,7 @@ const NewsArticleListItem = ({ article, viewMode, preferences, index, getRecomme
 
 
     return (
-        <li className={`c-newsArticle ${(viewMode === "headline") && (index === 0) ? "col-span-2 xl:col-span-3" : ""} ${(token && !preferences.includes(article.preference)) ? `hidden` : ""} ${(getRecommended && !friends.includes(article.friend)) && token ? `hidden` : ""}`} style={{ backgroundImage: `url('${article.url_to_image}')` }}>
+        <li className={`c-newsArticle ${(viewMode === "headline") && (index === 0) ? "col-span-2 xl:col-span-3" : ""} ${(token && !preferences.includes(article.preference) && !getRecommended) ? `hidden` : ""} ${(getRecommended && !friends.includes(article.friend)) && token ? `hidden` : ""}`} style={{ backgroundImage: `url('${article.url_to_image}')` }}>
             <div className="c-newsArticle__overlay" onClick={handleClick}></div>
             <div className="c-newsArticle__card">
                 <div className="c-newsArticle__cardHeader">

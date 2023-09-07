@@ -105,7 +105,7 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode, friends, prefer
 
   return (
     <div className={`c-newsArticleGallery`}>
-      <div className="flex flex-col gap-y-2 gap-x-8 items-center md:flex-row">
+      <div className="flex flex-col gap-y-2 gap-x-8 items-center md:flex-row md:items-start">
         <div className="flex justify-between gap-x-4 w-full md:w-1/2">
           <div className={`flex flex-col items-center gap-y-2 ${token ? "" : "hidden"}`}>
             <h4 className="font-semibold text-stone-900 dark:text-slate-300">My Feed</h4>

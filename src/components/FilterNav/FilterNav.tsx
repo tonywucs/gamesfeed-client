@@ -88,8 +88,11 @@ const FilterNav = ({ handleChangePrefs, handleChangeFriends, friends, preference
     }
 
     return (
-        <div className="flex flex-col gap-y-2">
-            <div className="flex gap-x-2">
+        <div className="flex flex-col gap-y-2 md:justify-between md:h-[85px]">
+            <div className={`flex flex-col items-center gap-y-2 ${token ? "" : "hidden"}`}>
+                <h4 className="font-semibold text-stone-900 dark:text-slate-300">Filters</h4>
+            </div>
+            <div className={`flex gap-x-2 ${getRecommended ? "hidden" : ""}`}>
                 <div className={`h-8 w-8 cursor-pointer ${multiSelect ? "bg-red-500" : "bg-green-500"}`} onClick={handleMultiSelect}></div>
                 {
                     userPref.map((pref, i) => {
