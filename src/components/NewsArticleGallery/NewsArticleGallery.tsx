@@ -27,7 +27,7 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
   const [newsArticles, setNewsArticles] = useState<any>({});
   const [preferences, setPreferences] = useState(sessionStorage.preferences || ",");
   const [getRecommended, setGetRecommended] = useState(sessionStorage.recommend === 'true' || false);
-  const [friends, setFriends] = useState(sessionStorage.friends)
+  const [friends, setFriends] = useState(sessionStorage.friends || "")
 
   // const getUnregistered = async () => {
   //   const { data } = await axios.get(`${ENDPOINT}/unregistered`, {
@@ -95,7 +95,7 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
   }
 
   useEffect(() => {
-    if (token && (Object.keys(newsArticles).length === 0)) {
+    if ((Object.keys(newsArticles).length === 0)) {
       getFriendsAndPrefs()
       if (getRecommended) {
         getRecNews()
@@ -104,9 +104,9 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
       }
     }
 
-    if (!token) {
-      navigate('/login');
-    }
+    // if (!token) {
+    //   navigate('/login');
+    // }
   }, [])
 
   console.log(newsArticles)
