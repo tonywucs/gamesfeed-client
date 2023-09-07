@@ -110,6 +110,7 @@ const PreferenceList = ({ action, getPrefsOnAction, handleTogglePrefs }: obj) =>
                     } else {
                         handleSubmitPrefs()
                         handleTogglePrefs()
+                        navigate('/')
                     }
                 }}> {action ? "Next" : "Submit"}
             </div>
