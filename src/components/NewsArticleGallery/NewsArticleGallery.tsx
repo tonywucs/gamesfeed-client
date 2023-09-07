@@ -148,7 +148,7 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode, friends, prefer
             </div>
           </div>
         </div>
-        {token && <FilterNav handleChangePrefs={handleChangePrefs} handleChangeFriends={handleChangeFriends} friends={friends} preferences={preferences} totalResults={total_results} results={results} getRecommended={getRecommended} />}
+        {token && <FilterNav toggleDarkMode={toggleDarkMode} handleChangePrefs={handleChangePrefs} handleChangeFriends={handleChangeFriends} friends={friends} preferences={preferences} totalResults={total_results} results={results} getRecommended={getRecommended} />}
       </div>
       <NewsArticleList viewMode={viewMode} preferences={preferences} articles={rest.articles} results={results} getRecommended={getRecommended} friends={friends} />
     </div>

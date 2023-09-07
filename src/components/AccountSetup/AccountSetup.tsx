@@ -9,7 +9,7 @@ import './AccountSetup.scss';
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/user';
 
-const AccountSetup = ({handleTogglePrefs}: any) => {
+const AccountSetup = ({handleTogglePrefs, handleChangePrefs, toggleDarkMode}: any) => {
 
     const token = sessionStorage.authToken;
     const [accSetup, setAccSetup] = useState<any>({
@@ -115,36 +115,36 @@ const AccountSetup = ({handleTogglePrefs}: any) => {
 
     if (accSetup && !accSetup.set_prefs) {
         return (
-            <div className="flex flex-col justify-center items-center w-full h-full bg-stone-900 text-slate-300 py-4">
+            <div className="flex flex-col justify-center items-center w-full h-full bg-white dark:bg-stone-900 text-stone-900 dark:text-white py-4">
                 <h1>Let's pick some games</h1>
-                <PreferenceList handleTogglePrefs={handleTogglePrefs} action={true} getPrefsOnAction={getPrefsOnAction} />
+                <PreferenceList handleChangePrefs={handleChangePrefs} handleTogglePrefs={handleTogglePrefs} action={true} getPrefsOnAction={getPrefsOnAction} />
             </div>
         )
     }
 
     if (accSetup && !accSetup.set_friends) {
         return (
-            <div className="flex flex-col p-4 md:p-8 items-center w-full h-full bg-stone-900 text-slate-300">
+            <div className="flex flex-col p-4 md:p-8 items-center w-full h-full bg-white dark:bg-stone-900 text-stone-900 dark:text-white">
                 <h1>Add someone!</h1>
                 <div className="flex flex-col items-center mt-4 md:mt-8">
-                    <div className="flex gap-x-4">
+                    <div className="flex gap-4 flex-wrap justify-center items-center">
                         {
                             randomFriends.map((friend: any, i: number) => {
                                 return (
                                     <div
                                         key={`add${friend.username}${i}`}
-                                        className={`flex flex-col justify-center items-center h-44 w-40 border-2 border-slate-300 text-slate-300 rounded-xl font-semibold body-lg active:shadow-md active:shadow-purple-500 hover:bg-slate-900 cursor-pointer ${addFriend.includes(friend.username) ? "bg-slate-900" : ""}`}
+                                        className={`flex flex-col justify-center items-center h-44 w-40 border-2 border-slate-300 text-stone-900 dark:text-white rounded-xl font-semibold body-lg shadow-md active:shadow-stone-900 hover:shadow-stone-900 cursor-pointer ${addFriend.includes(friend.username) ? "shadow-stone-900 bg-green-200" : ""}`}
                                         onClick={() => {
                                             handleAddAction(friend.username)
                                         }}>
-                                        <img className="friend__icon" src={addUserIcon} alt="Add Friend Icon" />
+                                        <img className={`friend__icon ${toggleDarkMode ? "friend__card--dark" : "friend__card"}`} src={addUserIcon} alt="Add Friend Icon" />
                                         <h2>{friend.username}</h2>
                                     </div>
                                 )
                             })
                         }
                     </div>
-                    <div className={`flex justify-center items-center body-md font-semibold w-fit my-4 px-4 py-2 cursor-pointer hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all`}
+                    <div className={`flex justify-center items-center body-md font-semibold w-fit my-4 px-4 py-2 cursor-pointer text-white hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 dark:bg-purple-300 dark:text-stone-900 rounded-lg transition-all`}
                         onClick={() => {
                             handleNextAction({ set_friends: true, isFinished: true })
                         }}>

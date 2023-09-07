@@ -1,0 +1,16 @@
+@use '../../styles/globals' as *;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .select {
+        @apply h-full w-full;
+        filter: invert(14%) sepia(54%) saturate(4216%) hue-rotate(266deg) brightness(88%) contrast(98%);
+
+        &--dark {
+            @apply h-full w-full;
+            filter: invert(62%) sepia(10%) saturate(4901%) hue-rotate(219deg) brightness(98%) contrast(103%);
+        }
+    }
+}

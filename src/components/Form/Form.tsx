@@ -68,9 +68,9 @@ const Form = ({ toggleDarkMode }: any) => {
 
     if (complete) {
         return (
-            <div className="flex flex-col justify-center text-white p-4 items-center w-full h-full bg-stone-900">
-                <h1 className="font-semibold flex justify-center items-center">Sign Up Complete!<span><img className="form__redirect" src={checkIcon} alt="Check mark" /></span></h1>
-                <h3 className="font-semibold flex justify-center items-center text-center">Congratulations! You're one step closer to saving a few clicks for your news! Redirecting back to the Login screen soon.</h3>
+            <div className="flex flex-col justify-center text-stone-900 dark:text-white p-4 items-center w-full h-full bg-white dark:bg-stone-900">
+                <h1 className="font-semibold flex justify-center items-center text-stone-900 dark:text-white">Sign Up Complete!<span><img className="form__redirect" src={checkIcon} alt="Check mark" /></span></h1>
+                <h3 className="font-semibold flex justify-center items-center text-center text-stone-900 dark:text-white">Congratulations! You're one step closer to saving a few clicks for your news! Redirecting back to the Login screen soon.</h3>
             </div>
         )
     }

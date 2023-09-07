@@ -91,12 +91,12 @@ const PreferenceList = ({ action, getPrefsOnAction, handleTogglePrefs, handleCha
     if (!currentPrefs) { return (<h1>Loading User Preferences...</h1>) }
 
     return (
-        <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col justify-center items-center bg-white dark:bg-stone-900 h-full">
             <ul className="grid grid-cols-3 mt-4 gap-2">
                 {
                     Object.keys(currentPrefs).map((pref: string, i: number) => {
                         return (
-                            <li key={`modal${pref}${i}`} className={`flex justify-center items-center h-20 w-24 border-2 border-slate-300 text-slate-300 rounded-xl font-semibold body-lg active:shadow-md active:shadow-purple-500 hover:bg-slate-900 cursor-pointer ${currentPrefs[`${pref}`] ? "bg-slate-900" : ""}`} 
+                            <li key={`modal${pref}${i}`} className={`flex justify-center items-center h-20 w-24 border-2 border-slate-300 text-stone-900 dark:text-white rounded-xl font-semibold body-lg shadow-md active:shadow-stone-900 hover:shadow-stone-900 cursor-pointer ${currentPrefs[`${pref}`] ? "shadow-stone-900 bg-green-200" : ""}`} 
                                 onClick={() => {
                                     handleClickOnPref(pref)
                             }}><span className="text-center">{pref}</span></li>
@@ -105,7 +105,7 @@ const PreferenceList = ({ action, getPrefsOnAction, handleTogglePrefs, handleCha
                 }
             </ul>
 
-            <div className={`flex justify-center items-center body-md font-semibold w-fit my-4 px-4 py-2 cursor-pointer text-slate-400 hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 rounded-lg transition-all`}
+            <div className={`flex justify-center items-center body-md font-semibold w-fit my-4 px-4 py-2 cursor-pointer text-white hover:shadow-md hover:shadow-purple-900 hover:text-slate-300 bg-slate-900 dark:bg-purple-300 dark:text-stone-900 rounded-lg transition-all`}
                 onClick={() => {
                     if (action) {
                         getPrefsOnAction(currentPrefs, { set_prefs: true })

@@ -1,10 +1,14 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
+import singleSelectIcon from '../../assets/icons/dice-one-solid.svg';
+import multiSelectIcon from '../../assets/icons/dice-five-solid.svg';
+import './FilterNav.scss';
+
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/user';
 
-const FilterNav = ({ handleChangePrefs, handleChangeFriends, friends, preferences, results, getRecommended }: any) => {
+const FilterNav = ({ toggleDarkMode, handleChangePrefs, handleChangeFriends, friends, preferences, results, getRecommended }: any) => {
 
     const token = sessionStorage.authToken;
     const [userPref, setUserPref] = useState<any[]>([]);
@@ -92,8 +96,10 @@ const FilterNav = ({ handleChangePrefs, handleChangeFriends, friends, preference
             <div className={`flex flex-col items-center gap-y-2 ${token ? "" : "hidden"}`}>
                 <h4 className="font-semibold text-stone-900 dark:text-slate-300">Filters</h4>
             </div>
-            <div className={`flex gap-x-2 ${getRecommended ? "hidden" : ""}`}>
-                <div className={`h-8 w-8 cursor-pointer ${multiSelect ? "bg-red-500" : "bg-green-500"}`} onClick={handleMultiSelect}></div>
+            <div className={`flex gap-2 flex-wrap ${getRecommended ? "hidden" : ""}`}>
+                <div className={`h-8 w-8 cursor-pointer`} onClick={handleMultiSelect}>
+                    <img className={toggleDarkMode ? "select--dark" : "select"} src={multiSelect ? multiSelectIcon : singleSelectIcon} alt="Select Options" />
+                </div>
                 {
                     userPref.map((pref, i) => {
                         return (
@@ -122,16 +128,18 @@ const FilterNav = ({ handleChangePrefs, handleChangeFriends, friends, preference
             </div>
             {
                 getRecommended ?
-                    <div className="flex gap-x-2">
-                        <div className={`h-8 w-8 cursor-pointer ${multiSelectFriends ? "bg-red-500" : "bg-green-500"}`} onClick={handleMultiSelectFriends}></div>
+                    <div className="flex gap-2 flex-wrap">
+                        <div className={`h-8 w-8 cursor-pointer`} onClick={handleMultiSelect}>
+                            <img className={toggleDarkMode ? "select--dark" : "select"} src={multiSelect ? multiSelectIcon : singleSelectIcon} alt="Select Options" />
+                        </div>
                         {
                             userFriends.map((friend: any, i: number) => {
                                 return (
                                     <p className={`text-base
                             ${friendsArr.includes(friend.username) ? (
                                             friend.id % 3 === 0 ? "bg-red-500" :
-                                            friend.id % 3 === 1 ? "bg-green-500" :
-                                            friend.id % 3 === 2 ? "bg-blue-500" :
+                                                friend.id % 3 === 1 ? "bg-green-500" :
+                                                    friend.id % 3 === 2 ? "bg-blue-500" :
                                                         "")
                                             : "bg-slate-500"
                                         } rounded-lg px-2 py-0.5 text-white cursor-pointer italic flex items-center`}

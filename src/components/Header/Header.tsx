@@ -17,10 +17,16 @@ const Header = ({ handleToggleSideNav, handleToggleDarkMode, toggleDarkMode }: h
     return (
         <header className="header">
             <div
-                className="sideNav"
+                className="sideNav hidden"
                 onClick={handleToggleSideNav}
             >
                 <img className={toggleDarkMode ? `sideNav__icon--dark` : `sideNav__icon`} src={chevronRightIcon} alt="Chevron open side navigation "></img>
+            </div>
+            <div className="absolute left-4">
+                <div className={`header__mode hover:font-semibold ${toggleDarkMode ? `header__mode--dark` : ``}`} onClick={handleToggleDarkMode}>
+                    <img className={toggleDarkMode ? `sideNav__icon--dark` : `sideNav__icon`} src={toggleDarkMode ? lightModeIcon : darkModeIcon} alt="Light/Dark Toggle" />
+                    <p className={`w-full body-sm text-stone-900 dark:text-slate-300 hover:font-semibold text-center`}> {toggleDarkMode ? "Light" : "Dark"}</p>
+                </div>
             </div>
             <Link
                 className={`flex max-w-xs mx-auto`}
@@ -29,12 +35,6 @@ const Header = ({ handleToggleSideNav, handleToggleDarkMode, toggleDarkMode }: h
                 <h1 className={`header__brand flex gap-x-1 items-center ${toggleDarkMode ? `header__brand--dark` : ``}`}>Games<span className="header__brandTail p-1.5">Feed</span></h1>
             </Link>
             <div className="flex absolute right-0 gap-x-4">
-                <div>
-                    <div className={`header__mode hover:font-semibold ${toggleDarkMode ? `header__mode--dark` : ``}`} onClick={handleToggleDarkMode}>
-                        <img className={toggleDarkMode ? `sideNav__icon--dark` : `sideNav__icon`} src={toggleDarkMode ? lightModeIcon : darkModeIcon} alt="Light/Dark Toggle" />
-                        <p className={`w-full body-sm text-stone-900 dark:text-slate-300 hover:font-semibold text-center`}> {toggleDarkMode ? "Light" : "Dark"}</p>
-                    </div>
-                </div>
                 <Link
                     className={`signin ${toggleDarkMode ? `signin--dark hover:font-semibold` : `hover:font-semibold`}`}
                     to="/login"

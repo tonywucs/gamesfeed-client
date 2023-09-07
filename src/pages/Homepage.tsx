@@ -14,7 +14,6 @@ const Homepage = ({toggleDarkMode, togglePrefModal, handleTogglePrefs}: any) => 
 
   const [preferences, setPreferences] = useState(sessionStorage.preferences || ",");
   const [friends, setFriends] = useState(sessionStorage.friends || "");
-  const [isLoading, setIsLoading] = useState(true);
 
   const getFriendsAndPrefs = async () => {
     const prefs = await axios.get(`${ENDPOINT_USER}/prefs`, {
@@ -39,7 +38,6 @@ const Homepage = ({toggleDarkMode, togglePrefModal, handleTogglePrefs}: any) => 
 
     setPreferences(prefs.data.preferences.map((pref: any) => pref.name).join(','));
     setFriends(Object.values(friends.data.friends).map((friend: any) => friend.username).join(','));
-    setIsLoading(false);
   }
 
   const handleChangePrefs = (prefs: any) => {

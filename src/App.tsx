@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Homepage from './pages/Homepage'
 import Redirect from './pages/Redirect'
-// import UserDashboard from './pages/UserDashboard'
 import Header from './components/Header/Header'
 import SideNav from './components/SideNav/SideNav'
 import Form from './components/Form/Form'
@@ -38,7 +37,7 @@ function App() {
           {/* <Route path='/news' element={<UserDashboard />} /> */}
           <Route path='/signup' element={<Form toggleDarkMode={toggleDarkMode} />} />
           <Route path='/login' element={<Form toggleDarkMode={toggleDarkMode} />} />
-          <Route path='/setup' element={<AccountSetup handleTogglePrefs={handleTogglePrefs} />} />
+          <Route path='/setup' element={<AccountSetup handleTogglePrefs={handleTogglePrefs} toggleDarkMode={toggleDarkMode} handleChangePrefs={handleTogglePrefs}/>} />
           <Route path='*' element={<Redirect />} />
         </Routes>
       </BrowserRouter>
