@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Homepage from './pages/Homepage'
 import Redirect from './pages/Redirect'
@@ -16,11 +16,9 @@ function App() {
   const [toggleSideNav, setToggleSideNav] = useState(false);
   const [toggleDarkMode, setToggleDarkMode] = useState(false);
   const [togglePrefModal, setTogglePrefModal] = useState(false);
-  const navigate = useNavigate();
   
   const handleTogglePrefs = () => {
     setTogglePrefModal(!togglePrefModal);
-    navigate('/');
   }
   const handleToggleSideNav = () => {
     setToggleSideNav(!toggleSideNav);
