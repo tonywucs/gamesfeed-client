@@ -23,7 +23,7 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode, friends, prefer
   const [viewMode, setViewMode] = useState(sessionStorage.viewMode || "headline")
   const [newsArticles, setNewsArticles] = useState<any>({});
   const [getRecommended, setGetRecommended] = useState(sessionStorage.recommend === 'true' || false);
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
 
   const getUnregistered = async () => {
     const { data } = await axios.get(`${ENDPOINT}/unregistered`, {
@@ -34,7 +34,7 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode, friends, prefer
         page_number: 0
       }
     })
-    setIsLoading(false);
+    // setIsLoading(false);
     setNewsArticles(data)
   }
 
@@ -49,7 +49,7 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode, friends, prefer
           page_number: 0
         }
       })
-      setIsLoading(false);
+      // setIsLoading(false);
       setNewsArticles(data)
     }
   }
@@ -65,7 +65,7 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode, friends, prefer
           page_number: 0
         }
       })
-      setIsLoading(false);
+      // setIsLoading(false);
       setNewsArticles(data)
     }
   }

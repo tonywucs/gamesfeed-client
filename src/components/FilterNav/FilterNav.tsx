@@ -77,9 +77,9 @@ const FilterNav = ({ toggleDarkMode, handleChangePrefs, handleChangeFriends, fri
         setMultiSelect(!multiSelect)
     }
 
-    const handleMultiSelectFriends = () => {
-        setMultiSelectFriends(!multiSelectFriends)
-    }
+    // const handleMultiSelectFriends = () => {
+    //     setMultiSelectFriends(!multiSelectFriends)
+    // }
 
     if ((userPref.length === 0) || (userFriends.length === 0)) {
         return <h1>Loading...</h1>
