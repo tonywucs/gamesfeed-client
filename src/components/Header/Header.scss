@@ -10,16 +10,29 @@
 
         &__brand {
             @apply p-4 text-2xl md:text-3xl font-semibold text-stone-900 dark:text-slate-300;
-            @apply hover:shadow-md hover:shadow-purple-200 rounded-xl transition-all;
+            @apply hover:shadow-md hover:shadow-stone-900 rounded-xl transition-all;
 
             &:active {
                 @apply text-xl md:text-2xl;
+            }
+
+            &--dark {
+                @apply hover:shadow-md hover:shadow-purple-200;
             }
         }
 
         &__brandTail {
             @apply px-2 text-purple-900 dark:text-purple-400 font-semibold;
             @apply border-2 border-purple-900 dark:border-purple-400 bg-white dark:bg-slate-900 rounded-xl;
+        }
+        
+        &__mode {
+            @apply w-16 h-16 p-1.5 flex flex-col justify-center items-center text-center;
+            @apply shadow-md hover:shadow-stone-900 cursor-pointer rounded-xl;
+
+            &--dark {
+                @apply hover:shadow-md hover:shadow-purple-200;
+            }
         }
     }
     .sideNav {
@@ -37,15 +50,19 @@
         }
     }
     .signin {
-        @apply absolute right-0 w-12 h-12 p-1 mr-4;
-        @apply hover:shadow-md hover:shadow-purple-200 rounded-lg transition-all;
+        @apply flex flex-col justify-center w-16 h-16 p-1.5 mr-4;
+        @apply hover:shadow-md hover:shadow-stone-900 rounded-lg transition-all;
 
         &:active {
             @apply h-11 w-11;
         }
 
+        &--dark {
+            @apply hover:shadow-md hover:shadow-purple-200;
+        }
+
         &__icon {
-            @apply w-full h-full;
+            @apply w- h-full;
             filter: invert(62%) sepia(10%) saturate(4901%) hue-rotate(219deg) brightness(98%) contrast(103%);
         }
     }

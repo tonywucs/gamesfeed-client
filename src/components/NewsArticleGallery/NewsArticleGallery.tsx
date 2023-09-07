@@ -28,19 +28,20 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
   const [preferences, setPreferences] = useState(sessionStorage.preferences || ",");
   const [getRecommended, setGetRecommended] = useState(sessionStorage.recommend === 'true' || false);
   const [friends, setFriends] = useState(sessionStorage.friends || "")
+  const [isLoading, setIsLoading] = useState(true);
 
-  // const getUnregistered = async () => {
-  //   const { data } = await axios.get(`${ENDPOINT}/unregistered`, {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //       num_of_articles: '30',
-  //       sort_by: 'published_at',
-  //       sort_type: 'desc',
-  //       page_number: 0
-  //     }
-  //   })
-  //   setNewsArticles(data)
-  // }
+  const getUnregistered = async () => {
+    const { data } = await axios.get(`${ENDPOINT}/unregistered`, {
+      headers: {
+        num_of_articles: '30',
+        sort_by: 'published_at',
+        sort_type: 'desc',
+        page_number: 0
+      }
+    })
+    setIsLoading(false);
+    setNewsArticles(data)
+  }
 
   const getNewsArticles = async () => {
     if (token) {
@@ -53,6 +54,7 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
           page_number: 0
         }
       })
+      setIsLoading(false);
       setNewsArticles(data)
     }
   }
@@ -68,6 +70,7 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
           page_number: 0
         }
       })
+      setIsLoading(false);
       setNewsArticles(data)
     }
   }
@@ -95,23 +98,20 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
   }
 
   useEffect(() => {
-    if ((Object.keys(newsArticles).length === 0)) {
-      getFriendsAndPrefs()
-      if (getRecommended) {
+    if (isLoading) {
+      if (token && getRecommended) {
+        getFriendsAndPrefs()
         getRecNews()
-      } else {
+      } else if (token) {
+        getFriendsAndPrefs()
         getNewsArticles()
+      } else {
+        getUnregistered()
       }
     }
+  }, [token])
 
-    // if (!token) {
-    //   navigate('/login');
-    // }
-  }, [])
-
-  console.log(newsArticles)
-
-  if (Object.keys(newsArticles).length === 0) {
+  if (isLoading) {
     return (<h1>Loading</h1>)
   }
 
@@ -145,16 +145,16 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
   const { total_results, results, ...rest } = newsArticles;
 
   return (
-    <div className={`c-newsArticleGallery text-slate-300`}>
+    <div className={`c-newsArticleGallery`}>
       <div className="flex justify-between gap-x-4 w-full md:w-1/2">
-        <div className="flex flex-col items-center gap-y-2">
+        <div className={`flex flex-col items-center gap-y-2 ${token ? "" : "hidden"}`}>
           <h4 className="font-semibold text-stone-900 dark:text-slate-300">My Feed</h4>
           <div className="flex w-fit gap-x-2">
             <div onClick={() => {
               handleTogglePrefs()
             }} className={`c-newsArticleGallery__icon`}>
               <img className={toggleDarkMode ? `c-newsArticleGallery__iconImg--dark` : `c-newsArticleGallery__iconImg`} src={prefMenu} alt="Set Preferences Icon" />
-              <p className="body-sm text-stone-900 dark:text-slate-300">Games</p>
+              <p className={`body-sm text-stone-900 dark:text-slate-300`}>Games</p>
             </div>
             <div onClick={() => {
               handleClickRecommend()
@@ -169,27 +169,27 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
           <div className="flex w-fit gap-x-2">
             <div onClick={() => {
               handleViewChange("list")
-            }} className={`c-newsArticleGallery__icon ${toggleDarkMode ? "hover:shadow-purple-300" : "hover:shadow-stone-900"} ${viewMode === "list" ? "c-newsArticleGallery__icon--clicked" : ""}`}>
+            }} className={`c-newsArticleGallery__icon hover:font-semibold ${toggleDarkMode ? "hover:shadow-purple-300" : "hover:shadow-stone-900"} ${viewMode === "list" ? "c-newsArticleGallery__icon--clicked" : ""}`}>
               <img className={toggleDarkMode ? `c-newsArticleGallery__iconImg--dark` : `c-newsArticleGallery__iconImg`} src={listIcon} alt="Set List View" />
-              <p className="body-sm text-stone-900 dark:text-slate-300">List</p>
+              <p className={`body-sm text-stone-900 dark:text-slate-300 ${viewMode === "list" ? "font-semibold" : ""}`}>List</p>
             </div>
             <div onClick={() => {
               handleViewChange("grid")
-            }} className={`c-newsArticleGallery__icon ${toggleDarkMode ? "hover:shadow-purple-300" : "hover:shadow-stone-900"} ${viewMode === "grid" ? "c-newsArticleGallery__icon--clicked" : ""}`}>
+            }} className={`c-newsArticleGallery__icon hover:font-semibold ${toggleDarkMode ? "hover:shadow-purple-300" : "hover:shadow-stone-900"} ${viewMode === "grid" ? "c-newsArticleGallery__icon--clicked" : ""}`}>
               <img className={toggleDarkMode ? `c-newsArticleGallery__iconImg--dark` : `c-newsArticleGallery__iconImg`} src={gridIcon} alt="Set Grid View" />
-              <p className="body-sm text-stone-900 dark:text-slate-300">Grid</p>
+              <p className={`body-sm text-stone-900 dark:text-slate-300 ${viewMode === "grid" ? "font-semibold" : ""}`}>Grid</p>
             </div>
             <div onClick={() => {
               handleViewChange("headline")
-            }} className={`c-newsArticleGallery__icon ${toggleDarkMode ? "hover:shadow-purple-300" : "hover:shadow-stone-900"} ${viewMode === "headline" ? "c-newsArticleGallery__icon--clicked" : ""}`}>
+            }} className={`c-newsArticleGallery__icon hover:font-semibold ${toggleDarkMode ? "hover:shadow-purple-300" : "hover:shadow-stone-900"} ${viewMode === "headline" ? "c-newsArticleGallery__icon--clicked" : ""}`}>
               <img className={toggleDarkMode ? `c-newsArticleGallery__iconImg--dark` : `c-newsArticleGallery__iconImg`} src={headlineIcon} alt="Set Headline View" />
-              <p className="body-sm text-stone-900 dark:text-slate-300">Headline</p>
+              <p className={`body-sm text-stone-900 dark:text-slate-300 ${viewMode === "headline" ? "font-semibold" : ""}`}>Headline</p>
             </div>
           </div>
         </div>
       </div>
 
-      <FilterNav handleChangePrefs={handleChangePrefs} handleChangeFriends={handleChangeFriends} friends={friends} preferences={preferences} totalResults={total_results} results={results} getRecommended={getRecommended} />
+      {token && <FilterNav handleChangePrefs={handleChangePrefs} handleChangeFriends={handleChangeFriends} friends={friends} preferences={preferences} totalResults={total_results} results={results} getRecommended={getRecommended} />}
       <NewsArticleList viewMode={viewMode} preferences={preferences} articles={rest.articles} results={results} getRecommended={getRecommended} friends={friends} />
     </div>
   );

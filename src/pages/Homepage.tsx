@@ -9,7 +9,7 @@ import PreferenceModal from "../components/PreferenceModal/PreferenceModal";
 const Homepage = ({toggleDarkMode, togglePrefModal, handleTogglePrefs}: any) => {
 
   return (
-    <main className={`h-full`}>
+    <main className={`h-full dark:bg-stone-900`}>
       <NewsArticleGallery handleTogglePrefs={handleTogglePrefs} toggleDarkMode={toggleDarkMode}/>
       {togglePrefModal && <PreferenceModal handleTogglePrefs={handleTogglePrefs}/>}
     </main>

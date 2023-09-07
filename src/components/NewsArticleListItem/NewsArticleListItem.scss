@@ -30,8 +30,11 @@
 
         &__recommend {
             @apply z-10 w-8 h-8 md:w-12 md:h-12;
-            @apply border-2 border-green-500 rounded-lg;
             @apply cursor-pointer;
+
+            &--selected {
+                filter: invert(45%) sepia(90%) saturate(414%) hue-rotate(89deg) brightness(93%) contrast(96%);
+            }
         }
 
         &__sourceRecent {

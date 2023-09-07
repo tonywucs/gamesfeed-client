@@ -17,31 +17,31 @@
     }
 
     h1, .page-header {
-        @apply text-3xl md:text-4xl text-slate-300;
+        @apply text-3xl md:text-4xl text-stone-900 dark:text-white;
     }
 
     h2, .subheader {
-        @apply text-2xl md:text-3xl text-slate-300;
+        @apply text-2xl md:text-3xl text-stone-900 dark:text-white;
     }
 
     h3, .tableheader {
-        @apply text-xl md:text-2xl text-slate-300;
+        @apply text-xl md:text-2xl text-stone-900 dark:text-white;
     }
 
     h4, .miniheader {
-        @apply text-lg md:text-xl text-slate-300;
+        @apply text-lg md:text-xl text-stone-900 dark:text-white;
     }
 
     .body-lg {
-        @apply text-base md:text-lg text-slate-300;
+        @apply text-base md:text-lg text-stone-900 dark:text-white;
     }
 
     body, .body-md {
-        @apply text-sm md:text-base text-slate-300;
+        @apply text-sm md:text-base text-stone-900 dark:text-white;
     }
 
     .body-sm {
-        @apply text-xs md:text-sm text-slate-300;
+        @apply text-xs md:text-sm text-stone-900 dark:text-white;
     }
 
     input.cell {

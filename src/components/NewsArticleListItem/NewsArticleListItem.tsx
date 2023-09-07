@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import './NewsArticleListItem.scss';
 import ReadMoreIcon from '../../assets/icons/readmore.svg';
+import starIcon from '../../assets/icons/star-solid.svg';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/user/recommend';
@@ -79,15 +80,16 @@ const NewsArticleListItem = ({ article, viewMode, preferences, index, getRecomme
     }
 
     useEffect(() => {
-        if (userRecommended.length === 0) { getRec() }
-    }, [])
+        if (token && (userRecommended.length === 0)) { getRec() }
+    }, [token])
 
     if (!article && userRecommended.length === 0) {
         return (<div className="c-newsArticle border-2 flex justify-center items-center">Loading...</div>)
     }
 
+
     return (
-        <li className={`c-newsArticle ${(viewMode === "headline") && (index === 0) ? "col-span-2 xl:col-span-3" : ""} ${!preferences.includes(article.preference) ? `hidden` : ""} ${(getRecommended && !friends.includes(article.friend)) ? `hidden` : ""}`} style={{ backgroundImage: `url('${article.url_to_image}')` }}>
+        <li className={`c-newsArticle ${(viewMode === "headline") && (index === 0) ? "col-span-2 xl:col-span-3" : ""} ${(token && !preferences.includes(article.preference)) ? `hidden` : ""} ${(getRecommended && !friends.includes(article.friend)) && token ? `hidden` : ""}`} style={{ backgroundImage: `url('${article.url_to_image}')` }}>
             <div className="c-newsArticle__overlay" onClick={handleClick}></div>
             <div className="c-newsArticle__card">
                 <div className="c-newsArticle__cardHeader">
@@ -97,9 +99,11 @@ const NewsArticleListItem = ({ article, viewMode, preferences, index, getRecomme
                                 ""
                         }`}>{article.preference}</h4>
                     <div
-                        className={`c-newsArticle__recommend ${userRecommended.find((recArt: any) => article.id === recArt.id) ? "bg-green-600" : ""}`}
+                        className={`c-newsArticle__recommend ${token ? "" : "hidden"}`}
                         onClick={() => { handleRecClick(article.id) }}
-                    ></div>
+                    >
+                        <img className={`w-full h-full ${userRecommended.find((recArt: any) => article.id === recArt.id) ? "c-newsArticle__recommend--selected" : ""}`} src={starIcon} alt="Recommend Icon"></img>
+                    </div>
                 </div>
                 <div className={`c-newsArticle__sourceRecent ${click || isHovered ? "hidden" : ""}`}>
                     {
@@ -112,10 +116,10 @@ const NewsArticleListItem = ({ article, viewMode, preferences, index, getRecomme
                 </div>
             </div>
 
-            <div className={`c-newsArticle__body hover:c-newsArticle__body--clicked ${click ? "c-newsArticle__body--clicked" : ""}`} onClick={handleClick} onMouseEnter={handleHoverEnter} onMouseLeave={handleHoverLeave}>
+            <div className={`c-newsArticle__body  hover:c-newsArticle__body--clicked ${click ? "c-newsArticle__body--clicked" : ""}`} onClick={handleClick} onMouseEnter={handleHoverEnter} onMouseLeave={handleHoverLeave}>
                 <div className="c-newsArticle__info">
-                    <h3 className={`c-newsArticle__title`}>{article.title}</h3>
-                    <h3 className={viewMode != "list" ? `c-newsArticle__description--grid` : "c-newsArticle__description"}>{article.description}</h3>
+                    <h3 className={`c-newsArticle__title text-white`}>{article.title}</h3>
+                    <h3 className={viewMode != "list" ? `c-newsArticle__description--grid text-white` : "c-newsArticle__description text-white"}>{article.description}</h3>
                 </div>
                 <div className={`c-newsArticle__reference`}>
                     <div className="flex flex-col">
