@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import prefMenu from '../../assets/icons/sliders-solid.svg';
@@ -22,7 +22,7 @@ import './NewsArticleGallery.scss';
 const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
 
   const token = sessionStorage.authToken;
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [viewMode, setViewMode] = useState(sessionStorage.viewMode || "headline")
   const [newsArticles, setNewsArticles] = useState<any>({});
   const [preferences, setPreferences] = useState(sessionStorage.preferences || ",");
