@@ -54,7 +54,7 @@
         @apply hover:shadow-md hover:shadow-stone-900 rounded-lg transition-all;
 
         &:active {
-            @apply h-11 w-11;
+            @apply h-[3.75rem] w-[3.75rem];
         }
 
         &--dark {
@@ -62,7 +62,7 @@
         }
 
         &__icon {
-            @apply w- h-full;
+            @apply w-full h-full;
             filter: invert(62%) sepia(10%) saturate(4901%) hue-rotate(219deg) brightness(98%) contrast(103%);
         }
     }

@@ -31,9 +31,18 @@
         &__recommend {
             @apply z-10 w-8 h-8 md:w-12 md:h-12;
             @apply cursor-pointer;
+            
+            // &--dark {
+            //     filter: invert(14%) sepia(54%) saturate(4216%) hue-rotate(266deg) brightness(88%) contrast(98%);
+            // }
+        }
+
+        &__recImg {
+            @apply w-full h-full;
+            filter: invert(62%) sepia(10%) saturate(4901%) hue-rotate(219deg) brightness(98%) contrast(103%);
 
             &--selected {
-                filter: invert(45%) sepia(90%) saturate(414%) hue-rotate(89deg) brightness(93%) contrast(96%);
+                filter: invert(63%) sepia(98%) saturate(442%) hue-rotate(83deg) brightness(86%) contrast(79%);
             }
         }
 

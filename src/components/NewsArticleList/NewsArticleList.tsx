@@ -27,7 +27,7 @@ interface newsarticle {
 
 const NewsArticleList = ({ viewMode, results, preferences, articles, getRecommended, friends }: viewMode) => {
   const token = sessionStorage.authToken;
-  console.log(token)
+
   return (
     <>
       {

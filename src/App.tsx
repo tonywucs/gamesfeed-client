@@ -36,8 +36,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Homepage togglePrefModal={togglePrefModal} handleTogglePrefs={handleTogglePrefs} toggleDarkMode={toggleDarkMode}/>} />
           {/* <Route path='/news' element={<UserDashboard />} /> */}
-          <Route path='/signup' element={<Form />} />
-          <Route path='/login' element={<Form />} />
+          <Route path='/signup' element={<Form toggleDarkMode={toggleDarkMode} />} />
+          <Route path='/login' element={<Form toggleDarkMode={toggleDarkMode} />} />
           <Route path='/setup' element={<AccountSetup handleTogglePrefs={handleTogglePrefs} />} />
           <Route path='*' element={<Redirect />} />
         </Routes>

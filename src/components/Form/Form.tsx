@@ -8,7 +8,7 @@ import './Form.scss';
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/user';
 
-const Form = () => {
+const Form = ({ toggleDarkMode }: any) => {
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -76,7 +76,7 @@ const Form = () => {
     }
 
     return (
-        <section className="form__wrapper h-[88vh]">
+        <section className={`form__wrapper h-[88vh] ${toggleDarkMode ? "bg-stone-900" : "bg-white"}`}>
             <form onSubmit={handleSubmit} className="form">
                 <h2 className="form__title">
                     {location.pathname === '/signup' ? "Sign Up Form" : "Login Form"}
@@ -103,7 +103,7 @@ const Form = () => {
                     {
                         location.pathname === '/login' ?
                             <div className="flex gap-x-2 items-center">
-                                <p className="text-slate-300">Don't have an account?</p>
+                                <p className="text-stone-900 dark:text-slate-300">Don't have an account?</p>
                                 <span onClick={handleSignUpLink} className="form__signupLink">Sign Up!</span>
                             </div>
                             : ""
@@ -113,7 +113,7 @@ const Form = () => {
                         <div className={`form__showPass ${!togglePass ? "bg-slate-300" : "bg-slate-900"} `} ></div>
                     </div>
                 </div>
-                <button type="submit" className="form__submitBtn font-semibold text-slate-900 bg-purple-400">
+                <button type="submit" className="form__submitBtn font-semibold text-white bg-purple-400">
                     {location.pathname === '/signup' ? "Sign Up" : "Login"}
                 </button>
             </form>

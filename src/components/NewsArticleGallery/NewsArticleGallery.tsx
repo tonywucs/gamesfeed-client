@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import prefMenu from '../../assets/icons/sliders-solid.svg';
@@ -14,20 +13,16 @@ import FilterNav from '../FilterNav/FilterNav';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 const ENDPOINT = SERVER_URL + '/news';
-const ENDPOINT_USER = SERVER_URL + '/user';
 
 import './NewsArticleGallery.scss';
 
 
-const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
+const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode, friends, preferences, handleChangeFriends, handleChangePrefs }: any) => {
 
   const token = sessionStorage.authToken;
-  // const navigate = useNavigate();
   const [viewMode, setViewMode] = useState(sessionStorage.viewMode || "headline")
   const [newsArticles, setNewsArticles] = useState<any>({});
-  const [preferences, setPreferences] = useState(sessionStorage.preferences || ",");
   const [getRecommended, setGetRecommended] = useState(sessionStorage.recommend === 'true' || false);
-  const [friends, setFriends] = useState(sessionStorage.friends || "")
   const [isLoading, setIsLoading] = useState(true);
 
   const getUnregistered = async () => {
@@ -75,59 +70,23 @@ const NewsArticleGallery = ({ handleTogglePrefs, toggleDarkMode }: any) => {
     }
   }
 
-  const getFriendsAndPrefs = async () => {
-    const prefs = await axios.get(`${ENDPOINT_USER}/prefs`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    })
-
-    const friends = await axios.get(`${ENDPOINT_USER}/friends`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    });
-
-    if (!(prefs.data.preferences.length === 0)) {
-      sessionStorage.preferences = prefs.data.preferences.map((pref: any) => pref.name).join(',');
-    }
-
-    if (!(friends.data.friends.length === 0)) {
-      sessionStorage.friends = Object.values(friends.data.friends).map((friend: any) => friend.username).join(',')
-    }
-  }
-
   useEffect(() => {
-    if (isLoading) {
-      if (token && getRecommended) {
-        getFriendsAndPrefs()
-        getRecNews()
-      } else if (token) {
-        getFriendsAndPrefs()
-        getNewsArticles()
-      } else {
-        getUnregistered()
-      }
+    if (token && getRecommended) {
+      getRecNews()
+    } else if (token) {
+      getNewsArticles()
+    } else {
+      getUnregistered()
     }
-  }, [token])
+  }, [preferences])
 
-  if (isLoading) {
+  if (Object.keys(newsArticles).length === 0) {
     return (<h1>Loading</h1>)
   }
 
   function handleViewChange(mode: string) {
     sessionStorage.viewMode = mode;
     setViewMode(mode);
-  }
-
-  const handleChangePrefs = (prefs: any) => {
-    sessionStorage.preferences = prefs.join(',')
-    setPreferences(prefs.join(','))
-  }
-
-  const handleChangeFriends = (friendsArr: any) => {
-    sessionStorage.friends = friendsArr.join(',')
-    setFriends(friendsArr.join(','))
   }
 
   const handleClickRecommend = () => {

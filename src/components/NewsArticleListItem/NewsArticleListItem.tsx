@@ -102,7 +102,7 @@ const NewsArticleListItem = ({ article, viewMode, preferences, index, getRecomme
                         className={`c-newsArticle__recommend ${token ? "" : "hidden"}`}
                         onClick={() => { handleRecClick(article.id) }}
                     >
-                        <img className={`w-full h-full ${userRecommended.find((recArt: any) => article.id === recArt.id) ? "c-newsArticle__recommend--selected" : ""}`} src={starIcon} alt="Recommend Icon"></img>
+                        <img className={`${userRecommended.find((recArt: any) => article.id === recArt.id) ? "c-newsArticle__recImg--selected" : "c-newsArticle__recImg"}`} src={starIcon} alt="Recommend Icon"></img>
                     </div>
                 </div>
                 <div className={`c-newsArticle__sourceRecent ${click || isHovered ? "hidden" : ""}`}>

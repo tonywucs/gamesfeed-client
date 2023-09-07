@@ -32,9 +32,9 @@ const FilterNav = ({ handleChangePrefs, handleChangeFriends, friends, preference
     }
 
     useEffect(() => {
-        if (token && (userPref.length === 0)) { getUserPref() }
-        if (token && (userFriends.length === 0)) { getUserFriends() }
-    }, [token])
+        if (token) { getUserPref() }
+        if (token) { getUserFriends() }
+    }, [preferences])
 
     const handleClickFilter = (pref: string) => {
         if (multiSelect) {
@@ -76,7 +76,7 @@ const FilterNav = ({ handleChangePrefs, handleChangeFriends, friends, preference
         setMultiSelectFriends(!multiSelectFriends)
     }
 
-    if (userPref.length === 0) {
+    if ((userPref.length === 0) || (userFriends.length === 0)) {
         return <h1>Loading...</h1>
     }
 
