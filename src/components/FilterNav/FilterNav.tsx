@@ -41,7 +41,6 @@ const FilterNav = ({ toggleDarkMode, handleChangePrefs, handleChangeFriends, fri
     }, [preferences])
 
     const handleClickFilter = (pref: string) => {
-        console.log(preferences)
         if (multiSelect) {
             if (preferences.includes(pref)) {
                 const prefsArr = preferences.split(',')
@@ -77,9 +76,9 @@ const FilterNav = ({ toggleDarkMode, handleChangePrefs, handleChangeFriends, fri
         setMultiSelect(!multiSelect)
     }
 
-    // const handleMultiSelectFriends = () => {
-    //     setMultiSelectFriends(!multiSelectFriends)
-    // }
+    const handleMultiSelectFriends = () => {
+        setMultiSelectFriends(!multiSelectFriends)
+    }
 
     if ((userPref.length === 0) || (userFriends.length === 0)) {
         return <h1>Loading...</h1>
@@ -129,8 +128,8 @@ const FilterNav = ({ toggleDarkMode, handleChangePrefs, handleChangeFriends, fri
             {
                 getRecommended ?
                     <div className="flex gap-2 flex-wrap">
-                        <div className={`h-8 w-8 cursor-pointer`} onClick={handleMultiSelect}>
-                            <img className={toggleDarkMode ? "select--dark" : "select"} src={multiSelect ? multiSelectIcon : singleSelectIcon} alt="Select Options" />
+                        <div className={`h-8 w-8 cursor-pointer`} onClick={handleMultiSelectFriends}>
+                            <img className={toggleDarkMode ? "select--dark" : "select"} src={multiSelectFriends ? multiSelectIcon : singleSelectIcon} alt="Select Options" />
                         </div>
                         {
                             userFriends.map((friend: any, i: number) => {
